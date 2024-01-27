@@ -1,0 +1,1 @@
+C:/Users/118141214/AppData/Local/Microsoft/WindowsApps/python3.11.exe c:/Users/118141214/Documents/S9/IHM/Projet/DuelEngine/MouseSensor.py
