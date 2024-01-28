@@ -198,24 +198,24 @@
             {
                 "eventInstances": [
                     {
-                        "refId": 4,
-                        "startTime": 19320
-                    },
-                    {
                         "refId": 3,
                         "startTime": 8000
+                    },
+                    {
+                        "refId": 4,
+                        "startTime": 19320
                     },
                     {
                         "refId": 5,
                         "startTime": 0
                     },
                     {
-                        "refId": 1,
-                        "startTime": 8000
-                    },
-                    {
                         "refId": 2,
                         "startTime": 8500
+                    },
+                    {
+                        "refId": 1,
+                        "startTime": 8000
                     }
                 ],
                 "name": "Timeline_1",
@@ -633,7 +633,12 @@
                     },
                     {
                         "commandLine": "C:\\Users\\118141214\\Documents\\S9\\IHM\\Projet\\Whiteboard\\Whiteboard.exe --device \"Loopback Pseudo-Interface 1\" --port 5670",
-                        "hostname": "DESKTOP-HVF8KL1",
+                        "hostname": "ARNO-PC",
+                        "ipAddress": "127.0.0.1"
+                    },
+                    {
+                        "commandLine": "C:\\Users\\Arno\\Code\\DuelEngine\\DuelEngine\\Whiteboard\\Whiteboard.exe --device \"Loopback Pseudo-Interface 1\" --port 5670",
+                        "hostname": "ARNO-PC",
                         "ipAddress": "127.0.0.1"
                     }
                 ],
@@ -774,7 +779,7 @@
                 "instances": [
                     {
                         "commandLine": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_3.11.1776.0_x64__qbz5n2kfra8p0\\python3.11.exe",
-                        "hostname": "DESKTOP-HVF8KL1",
+                        "hostname": "ARNO-PC",
                         "ipAddress": "127.0.0.1"
                     }
                 ],
@@ -824,7 +829,7 @@
                 "instances": [
                     {
                         "commandLine": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_3.11.1776.0_x64__qbz5n2kfra8p0\\python3.11.exe",
-                        "hostname": "DESKTOP-HVF8KL1",
+                        "hostname": "ARNO-PC",
                         "ipAddress": "127.0.0.1"
                     }
                 ],

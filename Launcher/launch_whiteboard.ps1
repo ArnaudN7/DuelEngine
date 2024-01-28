@@ -1,1 +1,2 @@
-C:/Users/Arno/Code/DuelEngine/Whiteboard/Whiteboard.exe --device "Loopback Pseudo-Interface 1" --port 5670
+# Exécution de l'application Whiteboard
+../Whiteboard/Whiteboard.exe --device "Loopback Pseudo-Interface 1" --port 5670
