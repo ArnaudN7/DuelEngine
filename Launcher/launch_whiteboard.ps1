@@ -1,1 +1,1 @@
-C:\Users\118141214\Documents\S9\IHM\Projet\Whiteboard\Whiteboard.exe --device "Loopback Pseudo-Interface 1" --port 5670
+C:/Users/Arno/Code/DuelEngine/Whiteboard/Whiteboard.exe --device "Loopback Pseudo-Interface 1" --port 5670

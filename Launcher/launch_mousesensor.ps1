@@ -1,1 +1,8 @@
-C:/Users/118141214/AppData/Local/Microsoft/WindowsApps/python3.11.exe c:/Users/118141214/Documents/S9/IHM/Projet/DuelEngine/MouseSensor.py
+# Chemin vers le script Python
+$cheminScriptPython = "C:/Users/Arno/Code/DuelEngine/DuelEngine/MouseSensor.py"
+
+# Commande pour exécuter le script Python
+$commandePython = "python $cheminScriptPython"
+
+# Exécute la commande Python
+Invoke-Expression -Command $commandePython
