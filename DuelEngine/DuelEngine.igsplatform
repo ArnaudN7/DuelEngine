@@ -202,20 +202,20 @@
                         "startTime": 8000
                     },
                     {
-                        "refId": 4,
-                        "startTime": 19320
-                    },
-                    {
-                        "refId": 5,
-                        "startTime": 0
-                    },
-                    {
                         "refId": 2,
                         "startTime": 8500
                     },
                     {
+                        "refId": 4,
+                        "startTime": 19320
+                    },
+                    {
                         "refId": 1,
                         "startTime": 8000
+                    },
+                    {
+                        "refId": 5,
+                        "startTime": 0
                     }
                 ],
                 "name": "Timeline_1",
@@ -692,6 +692,11 @@
                             "description": "",
                             "name": "player2_turn",
                             "type": "IMPULSION"
+                        },
+                        {
+                            "description": "",
+                            "name": "forDev",
+                            "type": "IMPULSION"
                         }
                     ],
                     "isDynamic": false,
@@ -768,6 +773,22 @@
                                 {
                                     "name": "board",
                                     "type": "STRING"
+                                },
+                                {
+                                    "name": "game_image",
+                                    "type": "STRING"
+                                },
+                                {
+                                    "name": "length",
+                                    "type": "INTEGER"
+                                },
+                                {
+                                    "name": "board_col",
+                                    "type": "INTEGER"
+                                },
+                                {
+                                    "name": "board_row",
+                                    "type": "INTEGER"
                                 }
                             ],
                             "name": "gameRegister"
@@ -1197,8 +1218,26 @@
                 "toOutput": "mouse_y"
             },
             {
+                "fromAgent": "dc941407-0bbe-4ebd-9331-a230714b546c",
+                "fromInput": "wildcard",
+                "toAgent": "DuelEngine",
+                "toOutput": "x"
+            },
+            {
+                "fromAgent": "1e78e4b2-6dfe-4e52-aac6-ae865016565f",
+                "fromInput": "wildcard",
+                "toAgent": "DuelEngine",
+                "toOutput": "y"
+            },
+            {
+                "fromAgent": "5f2bc8fa-dab1-49e2-b080-20db72302974",
+                "fromInput": "wildcard",
+                "toAgent": "DuelEngine",
+                "toOutput": "gameAction"
+            },
+            {
                 "fromAgent": "DuelEngine",
-                "fromInput": "player2_turn",
+                "fromInput": "forDev",
                 "toAgent": "bad06426-fa75-4372-9125-808e11ea765d",
                 "toOutput": "value"
             }
@@ -1418,9 +1457,9 @@
                 "view": {
                     "height": 52,
                     "isCollapsed": false,
-                    "positionX": -426,
-                    "positionY": -449,
-                    "positionZ": 9.639999999999839,
+                    "positionX": -455,
+                    "positionY": -412,
+                    "positionZ": 9.999999999999831,
                     "width": 256
                 }
             },
@@ -1492,6 +1531,168 @@
                     "positionY": -963,
                     "positionZ": 9.799999999999836,
                     "width": 246
+                }
+            },
+            {
+                "data": {
+                    "arguments": [
+                        {
+                            "gameName": "Morpix"
+                        },
+                        {
+                            "board": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAP8AAADFCAMAAACsN9QzAAAAYFBMVEX///8AAACwsLArKyvNzc2qqqpERESzs7Pk5OQsLCy4uLjV1dX19fXe3t7S0tLy8vKHh4d5eXk1NTUdHR1paWk7Ozvn5+eRkZFPT09GRkZfX18VFRWbm5uOjo4jIyNzc3Nb2KqxAAACTElEQVR4nO3dyVLCUBBG4ZvIECQhoAwyKO//llJy79ryT5u28Zx9F/0xWGwaUyIiol+o75pB803XG23i0rqqqpn+DDSz2/zacJ+R21RfqS9hfx/fmO40Ys19f/kVXOf5YR8hv+Z5/xdx/iXPz023Gq867/8kzj/l+dp0q/HCjx8/fvxa+PHjx48/Zvjx48ePXws/fvz48ccMP378+PFr4cePHz/+mOHHjx8/fi38+PHjxx8z/Pjx48evFd1f7n8W4vwiz/vf/3RTofqa93+tlfFp/Zrnr9J8Z8ffVhHbWvE33hIxo8PJ1tsh15r4V94MuZWJv/n+gf5oRoezO2+H2M6Gn/beELG9kT+1h7fZzzuW7y/VUZi+zZfxhTL/drD56zeg57K/OF+ev2fTrcbrv3//x48fP378Wvjx48ePP2b48ePHj18LP378+PHHDD9+/Pjxa+HHjx8//pjhx48fP34t/Pjx48cfM/z48ePHr4Uff2T/w9x/dacqXiezHwCIegBtc/6c0tkbIna24XfeDjmbT8DSmyG3NPEnb4acDT9dvB1iFyN/OnhLpA5W/JTa1eTnrd7zIh9LYXoyWX7k+Xfp0d3P/x/o95+0/vv3f/z48ePHr4UfP378+GOGHz9+/Pi18OPHjx9/zPDjx48fvxZ+/Pjx448Zfvz48ePXwo8fP378McOPHz9+/FrR/eX+W/0/tOX/7rrff4v1eX/1Dq/cHfamW43YZdDbv3wAzM4Yx29+E1z1Q7z2env2ol6/3Rv63g373ici+uN9ApxeKpVvdq+EAAAAAElFTkSuQmCC"
+                        },
+                        {
+                            "game_image": "https://play-lh.googleusercontent.com/zPxLgj5nvl20ahJV7aFC6S5mD8kii5CEEDj25j1P9CYAfXL9sdDuO-8eES0r4DhJHrU"
+                        },
+                        {
+                            "length": "20"
+                        },
+                        {
+                            "board_col": "3"
+                        },
+                        {
+                            "board_row": "3"
+                        }
+                    ],
+                    "selectedAgent": "DuelEngine",
+                    "selectedService": "gameRegister"
+                },
+                "definition": {
+                    "description": "",
+                    "family": "7fc274c8-b06e-548p-9d09-d14878381016",
+                    "inputs": [
+                        {
+                            "description": "",
+                            "name": "trigger",
+                            "type": "IMPULSION"
+                        }
+                    ],
+                    "isDynamic": false,
+                    "name": "",
+                    "outputs": [
+                    ],
+                    "parameters": [
+                    ],
+                    "services": [
+                    ],
+                    "version": ""
+                },
+                "identity": "610616c5-bd8d-461e-9ec1-1aaca914cce1",
+                "instances": [
+                ],
+                "view": {
+                    "height": 415,
+                    "isCollapsed": false,
+                    "positionX": 802,
+                    "positionY": -818,
+                    "positionZ": 9.989999999999831,
+                    "width": 659
+                }
+            },
+            {
+                "data": {
+                },
+                "definition": {
+                    "description": "",
+                    "family": "7fc274c8-b06e-429b-9d09-d14878381016",
+                    "inputs": [
+                        {
+                            "description": "",
+                            "name": "wildcard",
+                            "type": "WILDCARD_SINGLE_MAPPING"
+                        }
+                    ],
+                    "isDynamic": false,
+                    "name": "",
+                    "outputs": [
+                    ],
+                    "parameters": [
+                    ],
+                    "services": [
+                    ],
+                    "version": ""
+                },
+                "identity": "dc941407-0bbe-4ebd-9331-a230714b546c",
+                "instances": [
+                ],
+                "view": {
+                    "height": 46,
+                    "isCollapsed": false,
+                    "positionX": 1011,
+                    "positionY": -276,
+                    "positionZ": 9.839999999999835,
+                    "width": 180
+                }
+            },
+            {
+                "data": {
+                },
+                "definition": {
+                    "description": "",
+                    "family": "7fc274c8-b06e-429b-9d09-d14878381016",
+                    "inputs": [
+                        {
+                            "description": "",
+                            "name": "wildcard",
+                            "type": "WILDCARD_SINGLE_MAPPING"
+                        }
+                    ],
+                    "isDynamic": false,
+                    "name": "",
+                    "outputs": [
+                    ],
+                    "parameters": [
+                    ],
+                    "services": [
+                    ],
+                    "version": ""
+                },
+                "identity": "1e78e4b2-6dfe-4e52-aac6-ae865016565f",
+                "instances": [
+                ],
+                "view": {
+                    "height": 46,
+                    "isCollapsed": false,
+                    "positionX": 1010,
+                    "positionY": -190,
+                    "positionZ": 9.849999999999834,
+                    "width": 180
+                }
+            },
+            {
+                "data": {
+                },
+                "definition": {
+                    "description": "",
+                    "family": "7fc274c8-b06e-429b-9d09-d14878381016",
+                    "inputs": [
+                        {
+                            "description": "",
+                            "name": "wildcard",
+                            "type": "WILDCARD_SINGLE_MAPPING"
+                        }
+                    ],
+                    "isDynamic": false,
+                    "name": "",
+                    "outputs": [
+                    ],
+                    "parameters": [
+                    ],
+                    "services": [
+                    ],
+                    "version": ""
+                },
+                "identity": "5f2bc8fa-dab1-49e2-b080-20db72302974",
+                "instances": [
+                ],
+                "view": {
+                    "height": 46,
+                    "isCollapsed": false,
+                    "positionX": 1010,
+                    "positionY": -110,
+                    "positionZ": 9.859999999999834,
+                    "width": 180
                 }
             }
         ]
