@@ -198,24 +198,24 @@
             {
                 "eventInstances": [
                     {
-                        "refId": 2,
-                        "startTime": 8500
+                        "refId": 5,
+                        "startTime": 0
                     },
                     {
-                        "refId": 4,
-                        "startTime": 19320
+                        "refId": 2,
+                        "startTime": 8500
                     },
                     {
                         "refId": 3,
                         "startTime": 8000
                     },
                     {
-                        "refId": 1,
-                        "startTime": 8000
+                        "refId": 4,
+                        "startTime": 19320
                     },
                     {
-                        "refId": 5,
-                        "startTime": 0
+                        "refId": 1,
+                        "startTime": 8000
                     }
                 ],
                 "name": "Timeline_1",
@@ -647,7 +647,7 @@
                     "isCollapsed": false,
                     "positionX": 448,
                     "positionY": -804,
-                    "positionZ": 10.449999999999822,
+                    "positionZ": 10.939999999999811,
                     "width": 252
                 }
             },
@@ -797,6 +797,39 @@
                             "arguments": [
                             ],
                             "name": "actionResult"
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "shape",
+                                    "type": "STRING"
+                                },
+                                {
+                                    "name": "x",
+                                    "type": "INTEGER"
+                                },
+                                {
+                                    "name": "y",
+                                    "type": "INTEGER"
+                                },
+                                {
+                                    "name": "width",
+                                    "type": "INTEGER"
+                                },
+                                {
+                                    "name": "height",
+                                    "type": "INTEGER"
+                                },
+                                {
+                                    "name": "color_fill",
+                                    "type": "STRING"
+                                },
+                                {
+                                    "name": "stroke_color",
+                                    "type": "STRING"
+                                }
+                            ],
+                            "name": "addShape"
                         }
                     ],
                     "version": "1.0"
@@ -814,7 +847,7 @@
                     "isCollapsed": false,
                     "positionX": -14,
                     "positionY": -649,
-                    "positionZ": 10.439999999999822,
+                    "positionZ": 10.809999999999814,
                     "width": 272
                 }
             },
@@ -864,7 +897,7 @@
                     "isCollapsed": false,
                     "positionX": -435,
                     "positionY": -674,
-                    "positionZ": 9.769999999999836,
+                    "positionZ": 10.709999999999816,
                     "width": 252
                 }
             },
@@ -872,7 +905,7 @@
                 "data": {
                 },
                 "definition": {
-                    "description": "",
+                    "description": "A simple game that consists in clicking in the square",
                     "family": "",
                     "inputs": [
                         {
@@ -902,7 +935,7 @@
                         }
                     ],
                     "isDynamic": false,
-                    "name": "AnyGame",
+                    "name": "ClickIt",
                     "outputs": [
                         {
                             "description": "",
@@ -931,15 +964,20 @@
                     ],
                     "version": "1.0"
                 },
-                "identity": "AnyGame",
+                "identity": "ClickIt",
                 "instances": [
+                    {
+                        "commandLine": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.12_3.12.496.0_x64__qbz5n2kfra8p0\\python3.12.exe",
+                        "hostname": "ARNO-PC",
+                        "ipAddress": "127.0.0.1"
+                    }
                 ],
                 "view": {
                     "height": 40,
                     "isCollapsed": false,
-                    "positionX": 438,
-                    "positionY": -597,
-                    "positionZ": 9.419999999999844,
+                    "positionX": 440,
+                    "positionY": -598,
+                    "positionZ": 10.689999999999817,
                     "width": 252
                 }
             },
@@ -1012,9 +1050,9 @@
                 "view": {
                     "height": 54,
                     "isCollapsed": false,
-                    "positionX": 435,
-                    "positionY": -438,
-                    "positionZ": 9.819999999999835,
+                    "positionX": 441,
+                    "positionY": -399,
+                    "positionZ": 10.589999999999819,
                     "width": 252
                 }
             },
@@ -1087,25 +1125,25 @@
             {
                 "fromAgent": "DuelEngine",
                 "fromInput": "player1_win",
-                "toAgent": "AnyGame",
+                "toAgent": "ClickIt",
                 "toOutput": "player1_win"
             },
             {
                 "fromAgent": "DuelEngine",
                 "fromInput": "player2_win",
-                "toAgent": "AnyGame",
+                "toAgent": "ClickIt",
                 "toOutput": "player2_win"
             },
             {
                 "fromAgent": "DuelEngine",
                 "fromInput": "player1_turn",
-                "toAgent": "AnyGame",
+                "toAgent": "ClickIt",
                 "toOutput": "player1_turn"
             },
             {
                 "fromAgent": "DuelEngine",
                 "fromInput": "player2_turn",
-                "toAgent": "AnyGame",
+                "toAgent": "ClickIt",
                 "toOutput": "player2_turn"
             },
             {
@@ -1139,7 +1177,7 @@
                 "toOutput": "gameAction"
             },
             {
-                "fromAgent": "AnyGame",
+                "fromAgent": "ClickIt",
                 "fromInput": "action",
                 "toAgent": "DuelEngine",
                 "toOutput": "gameAction"
@@ -1157,13 +1195,13 @@
                 "toOutput": "x"
             },
             {
-                "fromAgent": "AnyGame",
+                "fromAgent": "ClickIt",
                 "fromInput": "x",
                 "toAgent": "DuelEngine",
                 "toOutput": "x"
             },
             {
-                "fromAgent": "AnyGame",
+                "fromAgent": "ClickIt",
                 "fromInput": "y",
                 "toAgent": "DuelEngine",
                 "toOutput": "y"
@@ -1175,7 +1213,7 @@
                 "toOutput": "currentGame"
             },
             {
-                "fromAgent": "AnyGame",
+                "fromAgent": "ClickIt",
                 "fromInput": "currentGame",
                 "toAgent": "DuelEngine",
                 "toOutput": "currentGame"
@@ -1245,6 +1283,12 @@
                 "fromInput": "forDev",
                 "toAgent": "bad06426-fa75-4372-9125-808e11ea765d",
                 "toOutput": "value"
+            },
+            {
+                "fromAgent": "ClickIt",
+                "fromInput": "reset",
+                "toAgent": "DuelEngine",
+                "toOutput": "gameReset"
             }
         ],
         "splits": [
@@ -1388,8 +1432,8 @@
                     "isCollapsed": false,
                     "positionX": 263,
                     "positionY": -881,
-                    "positionZ": 9.039999999999852,
-                    "width": 180
+                    "positionZ": 10.719999999999816,
+                    "width": 398
                 }
             },
             {
@@ -1464,13 +1508,13 @@
                     "isCollapsed": false,
                     "positionX": -703,
                     "positionY": -428,
-                    "positionZ": 10.54999999999982,
+                    "positionZ": 10.96999999999981,
                     "width": 256
                 }
             },
             {
                 "data": {
-                    "selectedAgent": "Ingescape Circle"
+                    "selectedAgent": "DuelEngine"
                 },
                 "definition": {
                     "description": "",
@@ -1491,20 +1535,44 @@
                 "instances": [
                 ],
                 "view": {
-                    "height": 483,
+                    "height": 380,
                     "isCollapsed": false,
                     "positionX": -856,
                     "positionY": -1185,
-                    "positionZ": 9.759999999999836,
-                    "width": 602
+                    "positionZ": 10.909999999999812,
+                    "width": 882
                 }
             },
             {
                 "data": {
                     "arguments": [
+                        {
+                            "type": "rectangle"
+                        },
+                        {
+                            "x": "0"
+                        },
+                        {
+                            "y": "0"
+                        },
+                        {
+                            "width": "100"
+                        },
+                        {
+                            "height": "100"
+                        },
+                        {
+                            "fill": "blue"
+                        },
+                        {
+                            "stroke": "blue"
+                        },
+                        {
+                            "strokeWidth": "0"
+                        }
                     ],
                     "selectedAgent": "Whiteboard",
-                    "selectedService": "getElements"
+                    "selectedService": "addShape"
                 },
                 "definition": {
                     "description": "",
@@ -1530,12 +1598,12 @@
                 "instances": [
                 ],
                 "view": {
-                    "height": 48,
+                    "height": 263,
                     "isCollapsed": false,
-                    "positionX": 470,
-                    "positionY": -963,
-                    "positionZ": 9.799999999999836,
-                    "width": 246
+                    "positionX": -839,
+                    "positionY": -324,
+                    "positionZ": 10.95999999999981,
+                    "width": 265
                 }
             },
             {
@@ -1591,7 +1659,7 @@
                     "isCollapsed": false,
                     "positionX": 745,
                     "positionY": -863,
-                    "positionZ": 10.53999999999982,
+                    "positionZ": 10.699999999999816,
                     "width": 659
                 }
             },
@@ -1698,6 +1766,54 @@
                     "positionY": -110,
                     "positionZ": 9.859999999999834,
                     "width": 180
+                }
+            },
+            {
+                "data": {
+                    "arguments": [
+                        {
+                            "elementId": "0"
+                        },
+                        {
+                            "x": "1"
+                        },
+                        {
+                            "y": "10"
+                        }
+                    ],
+                    "selectedAgent": "Whiteboard",
+                    "selectedService": "moveTo"
+                },
+                "definition": {
+                    "description": "",
+                    "family": "7fc274c8-b06e-548p-9d09-d14878381016",
+                    "inputs": [
+                        {
+                            "description": "",
+                            "name": "trigger",
+                            "type": "IMPULSION"
+                        }
+                    ],
+                    "isDynamic": false,
+                    "name": "",
+                    "outputs": [
+                    ],
+                    "parameters": [
+                    ],
+                    "services": [
+                    ],
+                    "version": ""
+                },
+                "identity": "be84b195-158c-4c3c-93a3-a7d7f4324975",
+                "instances": [
+                ],
+                "view": {
+                    "height": 48,
+                    "isCollapsed": false,
+                    "positionX": 233,
+                    "positionY": -1119,
+                    "positionZ": 10.889999999999812,
+                    "width": 246
                 }
             }
         ]
