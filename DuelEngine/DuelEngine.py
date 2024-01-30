@@ -141,7 +141,7 @@ def init():
     update_whiteboard_infos()
 
 def forDev(iop_type, name, value_type, value, my_data): ### TEMP ###
-    play("Morpix")
+    play("ClickIt")
 
 ### GLOBAL VARIABLES 
 current_title = ""

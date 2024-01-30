@@ -1464,7 +1464,7 @@
                     "isCollapsed": false,
                     "positionX": -703,
                     "positionY": -428,
-                    "positionZ": 10.469999999999821,
+                    "positionZ": 10.54999999999982,
                     "width": 256
                 }
             },
@@ -1542,16 +1542,16 @@
                 "data": {
                     "arguments": [
                         {
-                            "gameName": "Morpix"
+                            "gameName": "ClickIt"
                         },
                         {
-                            "board": "https://github.com/ArnaudN7/DuelEngine/blob/main/Games/Images/Tic-tac-toe.png?raw=true"
+                            "board": "https://github.com/ArnaudN7/DuelEngine/blob/main/Games/Images/ClickIt.png?raw=true"
                         },
                         {
                             "game_image": "https://play-lh.googleusercontent.com/zPxLgj5nvl20ahJV7aFC6S5mD8kii5CEEDj25j1P9CYAfXL9sdDuO-8eES0r4DhJHrU"
                         },
                         {
-                            "length": "600"
+                            "length": "200"
                         },
                         {
                             "board_col": "3"
@@ -1591,7 +1591,7 @@
                     "isCollapsed": false,
                     "positionX": 745,
                     "positionY": -863,
-                    "positionZ": 10.479999999999821,
+                    "positionZ": 10.53999999999982,
                     "width": 659
                 }
             },
