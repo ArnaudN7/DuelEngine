@@ -8,6 +8,7 @@
 #
 
 import sys
+from time import sleep
 import ingescape as igs
 
 NAME = "ClickIt"
@@ -60,7 +61,7 @@ def init():
     agent_init()
 
 def register():
-    arguments = (NAME, BOARD, GAME_IMAGE, CASE_LENGTH, BOARD_COL, BOARD_ROW)
+    arguments = (NAME, BOARD, GAME_IMAGE, CASE_LENGTH, CASE_LENGTH, BOARD_COL, BOARD_ROW)
     igs.service_call("DuelEngine", "gameRegister", arguments, "")
         
 ### GLOBAL VARIABLES
@@ -116,5 +117,9 @@ init()
 print(NAME)
 
 input()
+
+igs.service_call("DuelEngine", "gameUnregister", (), "")
+
+sleep(1) # Ensure call
 
 igs.stop()

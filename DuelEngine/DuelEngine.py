@@ -8,15 +8,20 @@ import threading
 ### CONSTANTS
 NAME = "DuelEngine"
 SELECT_GAME = "Sélectionnez un jeu !"
+REPLAY_GAME = "Souhaitez-vous rejouer ?"
+SELECT_GAME_STATE = "selectGame"
+REPLAY_GAME_STATE = "replayGame"
+MAX_GAMES = 9 # Should be equal to board_col * board_row of SELECT_GAME_STATE_INFOS
+SELECT_GAME_STATE_INFOS = {"length":300, "height":300, "board_col":3, "board_row":3}
+REPLAY_GAME_STATE_INFOS = {"length":135, "height":55, "board_col":1, "board_row":3}
 BACKGROUND_COLOR = "#FFFFFF"
 TOUR_J1 = "Joueur 1 commence son tour."
 TOUR_J2 = "Joueur 2 commence son tour."
 VICTOIRE_J1 = "Joueur 1 a remporté la victoire !"
 VICTOIRE_J2 = "Joueur 2 a remporté la victoire !"
-SELECT_GAME_STATE = "selectGame"
-REPLAY_GAME_STATE = "replayGame"
 W_Y_BORDER_TOP = 128
 W_X_BORDER_RIGHT = 408
+GAME_UNREGISTERED_DURING_GAME = "ERREUR : Le moteur du jeu a cessé de répondre. Retour à la sélection..."
 ### --- CONSTANTS
 
 def input_callback(iop_type, name, value_type, value, my_data):
@@ -35,24 +40,41 @@ def input_callback(iop_type, name, value_type, value, my_data):
             None
 
 def service_callback(sender_agent_name, sender_agent_uuid, service_name, arguments, token, my_data):
-    global current_game
     match (sender_agent_name, service_name):
         case (sender_agent_name,"gameRegister"):
-            global games_available
-            games_available[arguments[0]] = {"board":arguments[1], "game_image":arguments[2], "length":int(arguments[3]), "board_col":int(arguments[4]), "board_row":int(arguments[5])}
-        case (current_game,"addShape"):
-            color_fill = arguments[5]
-            stroke_color = arguments[6]
-            if color_fill == "PLAYER1COLOR":
-                color_fill = players_color[0]
-            if color_fill == "PLAYER2COLOR":
-                color_fill = players_color[1]
-            if stroke_color == "PLAYER1COLOR":
-                stroke_color = players_color[0]
-            if stroke_color == "PLAYER2COLOR":
-                stroke_color = players_color[1]
-            infos = {"shape":arguments[0], "x":arguments[1], "y":arguments[2], "width":arguments[3], "height":arguments[4], "color_fill":color_fill,"stroke_color":stroke_color}
-            add_element("shape", infos)
+            if not arguments[0] in games_available: # Game not already added
+                games_available[arguments[0]] = {"board":arguments[1], "game_image":arguments[2], "length":int(arguments[3]), "height":int(arguments[4]),"board_col":int(arguments[5]), "board_row":int(arguments[6])}
+                if current_game == SELECT_GAME_STATE: # If we are selecting a game
+                    select_game() # Refresh the select screen to display the new game
+        case (sender_agent_name,"gameUnregister"):
+            if sender_agent_name in games_available: # Game already added
+                del games_available[sender_agent_name]
+            if current_game == sender_agent_name:
+                select_game()
+                send_log(GAME_UNREGISTERED_DURING_GAME)
+        case (sender_agent_name,"addShape"):
+            if sender_agent_name == current_game:
+                color_fill = arguments[5]
+                stroke_color = arguments[6]
+                if color_fill == "PLAYER1COLOR":
+                    color_fill = players_color[0]
+                if color_fill == "PLAYER2COLOR":
+                    color_fill = players_color[1]
+                if stroke_color == "PLAYER1COLOR":
+                    stroke_color = players_color[0]
+                if stroke_color == "PLAYER2COLOR":
+                    stroke_color = players_color[1]
+                infos = {"shape":arguments[0], "x":arguments[1], "y":arguments[2], "width":arguments[3], "height":arguments[4], "color_fill":color_fill,"stroke_color":stroke_color}
+                add_element("shape", infos)
+        case (sender_agent_name,"addShapeInBoard"):
+            if sender_agent_name == current_game:
+                add_shape_in_board(arguments[0],arguments[1],arguments[2],arguments[3],arguments[4])
+        case (sender_agent_name,"addTextInBoard"):
+            if sender_agent_name == current_game:
+                add_text_in_board(arguments[0],arguments[1],arguments[2],arguments[3])
+        case (sender_agent_name,"addImageurlInBoard"):
+            if sender_agent_name == current_game:
+                add_shape_in_board(arguments[0],arguments[1],arguments[2])
         case ("Whiteboard","elementCreated"):
             igs.service_call("Whiteboard", "getElements", None, "")
         case ("Whiteboard","elements"):
@@ -112,8 +134,10 @@ def agent_init():
     igs.service_arg_add("gameRegister", "game_image", igs.STRING_T)
     igs.service_arg_add("gameRegister", "board", igs.STRING_T)
     igs.service_arg_add("gameRegister", "length", igs.INTEGER_T)
+    igs.service_arg_add("gameRegister", "height", igs.INTEGER_T)
     igs.service_arg_add("gameRegister", "board_col", igs.INTEGER_T)
     igs.service_arg_add("gameRegister", "board_row", igs.INTEGER_T)
+    igs.service_init("gameUnregister", service_callback, None)
     igs.service_init("addShape", service_callback, None)
     igs.service_arg_add("addShape", "shape", igs.STRING_T)
     igs.service_arg_add("addShape", "x", igs.INTEGER_T)
@@ -122,6 +146,21 @@ def agent_init():
     igs.service_arg_add("addShape", "height", igs.INTEGER_T)
     igs.service_arg_add("addShape", "color_fill", igs.STRING_T)
     igs.service_arg_add("addShape", "stroke_color", igs.STRING_T)
+    igs.service_init("addShapeInBoard", service_callback, None)
+    igs.service_arg_add("addShapeInBoard", "shape", igs.STRING_T)
+    igs.service_arg_add("addShapeInBoard", "x", igs.INTEGER_T)
+    igs.service_arg_add("addShapeInBoard", "y", igs.INTEGER_T)
+    igs.service_arg_add("addShapeInBoard", "color_fill", igs.STRING_T)
+    igs.service_arg_add("addShapeInBoard", "stroke_color", igs.STRING_T)
+    igs.service_init("addTextInBoard", service_callback, None)
+    igs.service_arg_add("addShapeInBoard", "text", igs.STRING_T)
+    igs.service_arg_add("addShapeInBoard", "x", igs.INTEGER_T)
+    igs.service_arg_add("addShapeInBoard", "y", igs.INTEGER_T)
+    igs.service_arg_add("addShapeInBoard", "color", igs.STRING_T)
+    igs.service_init("addImageurlInBoard", service_callback, None)
+    igs.service_arg_add("addShapeInBoard", "url", igs.STRING_T)
+    igs.service_arg_add("addShapeInBoard", "x", igs.INTEGER_T)
+    igs.service_arg_add("addShapeInBoard", "y", igs.INTEGER_T)
     # Receive
     igs.service_init("elementCreated", service_callback, None)
     igs.service_arg_add("elementCreated", "elementId", igs.INTEGER_T)
@@ -151,7 +190,8 @@ current_player_color = ""
 current_game = ""
 last_game_played = ""
 program_running = True
-games_available = {} # {"Morpion":{"game_image":"screen.url","board":"board.url", "length":20, "board_col":3, "board_row":3},...}
+games_available = {SELECT_GAME_STATE:SELECT_GAME_STATE_INFOS,REPLAY_GAME_STATE:REPLAY_GAME_STATE_INFOS} # {"Morpion":{"game_image":"screen.url","board":"board.url", "length":20, "height":20, board_col":3, "board_row":3},...}
+current_game_selection = [] # Updated in select_game()
 current_game_score = [0,0] # [player1score,player2score]
 players_color = ["#451720","#023124"] # [player1color,player2color]
 current_board_location = [] # top_left_x, top_left_y, bottom_right_x, bottom_right_y
@@ -164,7 +204,7 @@ whiteboard_fixed_elements = []  # {id, type, infos} infos for a shape : {shape, 
 
 ### FUNCTIONS : WITH A IGS CALL
 
-def elements_not_transposable():
+def elements_not_transposable(): ### TBD ### Mentionner ça dans le rapport + essai anti deletion
     global program_running
     while(program_running):
         for element in whiteboard_fixed_elements:
@@ -197,25 +237,22 @@ def send_log(log : str):
     igs.output_set_string("lastGameLog", log)
 
 def game_action(x : int, y : int):
-    x_out = 0
-    y_out = 0
-    x_in = current_board_location[0] < x and x < current_board_location[2]
-    y_in = current_board_location[1] < y and y < current_board_location[3]
-    if x_in and y_in:
-        game = games_available[current_game]
-        x_out = floor((x-current_board_location[0])/game["length"]) + 1
-        y_out = floor((y-current_board_location[1])/game["length"]) + 1
-    igs.output_set_int("x", int(x_out))
-    igs.output_set_int("y", int(y_out))
-    igs.output_set_impulsion("gameAction")
+    if xy_board_is_in_board(x, y):
+        igs.output_set_int("x", x)
+        igs.output_set_int("y", y)
+        igs.output_set_impulsion("gameAction")
 
 def create_shape(shape : str, x : float, y : float, width : float, height : float, color_fill : str, stroke_color : str):
-    parameters = (shape, x, y, width, height, color_fill, stroke_color, 0.0)
+    parameters = (shape, x, y, width, height, color_fill, stroke_color, 1.0)
     igs.service_call("Whiteboard", "addShape", parameters, "")
 
 def create_image_from_url(url : str, x : float, y : float):
     parameters = (url, x, y)
     igs.service_call("Whiteboard", "addImageFromUrl", parameters, "")
+
+def create_text(text : str, x : float, y : float, color : str):
+    parameters = (text, x, y, color)
+    igs.service_call("Whiteboard", "addText", parameters, "")
 
 def reset_game():
     igs.output_set_impulsion("gameReset")
@@ -227,7 +264,7 @@ def clear_whiteboard():
 
 ### --- FUNCTIONS : WITH A IGS CALL
     
-### FUNCTIONS : GETTING INFOS 
+### FUNCTIONS : GETTING / MODIFYING INFOS 
     
 def update_whiteboard_infos():
     window = pgw.getWindowsWithTitle("Whiteboard")
@@ -244,11 +281,39 @@ def is_in_whiteboard(x : int, y : int):
 def coord_to_whiteboard(x : int, y : int):
     return float(x - (whiteboard_infos["x"]+6)), float(y - (whiteboard_infos["y"]+W_Y_BORDER_TOP))
 
-def update_board_infos():
+def xy_whiteboard_is_in_board(x : float, y : float):
+    x_in = current_board_location[0] < x and x < current_board_location[2]
+    y_in = current_board_location[1] < y and y < current_board_location[3]
+    return x_in and y_in
+
+def xy_board_is_in_board(x : int, y : int):
+    game = games_available[current_game]
+    return (x > 0 and x <= game["board_col"] and y > 0 and y <= game["board_row"])
+
+def board_to_whiteboard(x : int, y : int):
+    game = games_available[current_game]
+    x_whiteboard = (x-1)*game["length"]+current_board_location[0]
+    y_whiteboard = (y-1)*game["height"]+current_board_location[1]
+    return float(x_whiteboard), float(y_whiteboard)
+
+def whiteboard_to_board(x : float, y : float):
+    game = games_available[current_game]
+    x_board = floor((x-current_board_location[0])/game["length"]) + 1
+    y_board = floor((y-current_board_location[1])/game["height"]) + 1
+    return x_board, y_board
+
+def update_current_game_board_infos():
+    game = games_available[current_game]
+    length = game["length"]
+    height = game["height"]
+    board_col = game["board_col"]
+    board_row = game["board_row"]
+    update_board_infos(length, height, board_col, board_row)
+
+def update_board_infos(length : int, height : int, board_col : int, board_row : int):
     global current_board_location
-    length = games_available[current_game]["length"]
-    x_diff = (games_available[current_game]["board_col"] * length) / 2
-    y_diff = (games_available[current_game]["board_row"] * length) / 2
+    x_diff = (board_col * length) / 2
+    y_diff = (board_row * height) / 2
     whiteboard_width = whiteboard_infos["width"] - W_X_BORDER_RIGHT
     whiteboard_height = whiteboard_infos["height"] - W_Y_BORDER_TOP
     x_center_whiteboard = whiteboard_width / 2
@@ -262,21 +327,22 @@ def update_board_infos():
 def get_game_score():
     return "Joueur 1 | " + str(current_game_score[0]) + " - " + str(current_game_score[1]) + " | Joueur 2"
 
-### --- FUNCTIONS : GETTING INFOS
+### --- FUNCTIONS : GETTING / MODIFYING INFOS
     
 ### FUNCTIONS : CALLBACK OF INPUTS
     
 def click(x : int, y : int):
     update_whiteboard_infos()
     if is_in_whiteboard(x, y):
-        new_x, new_y = coord_to_whiteboard(x,y)
+        x_whiteboard, y_whiteboard = coord_to_whiteboard(x,y)
+        x_board, y_board = whiteboard_to_board(x_whiteboard, y_whiteboard)
         if current_game != SELECT_GAME_STATE and current_game != REPLAY_GAME_STATE:
-            game_action(new_x, new_y)
+            game_action(x_board, y_board)
         else:
             if current_game == SELECT_GAME_STATE:
-                None ### TBD ###
+                select_action(x_board, y_board)
             else:
-                None ### TBD ### end_of_game()
+                replay_action(x_board, y_board)
 
 def player_win(player_id : int): # player_id : 0 or 1
     text_win = ""
@@ -310,8 +376,37 @@ def add_element(elementType : str, infos):
             create_shape(infos["shape"], float(infos["x"]), float(infos["y"]), float(infos["width"]), float(infos["height"]), infos["color_fill"], infos["stroke_color"])     
         case "imageurl":
             create_image_from_url(infos["url"], float(infos["x"]), float(infos["y"]))
+        case "text":
+            create_text(infos["text"], float(infos["x"]), float(infos["y"]), infos["color"])
         case _:
             None
+
+def add_text_in_board(text : str, x : int, y : int, color : str):
+    if xy_board_is_in_board(x, y):
+        x_whiteboard, y_whiteboard = board_to_whiteboard(x, y)
+        infos = {"text":text, "x":x_whiteboard+4, "y":y_whiteboard+4, "color":color}
+        add_element("text", infos)
+
+def add_shape_in_board(shape : str, x : int, y : int, color_fill : str, stroke_color : str):
+    if xy_board_is_in_board(x, y):
+        if color_fill == "PLAYER1COLOR":
+            color_fill = players_color[0]
+        if color_fill == "PLAYER2COLOR":
+            color_fill = players_color[1]
+        if stroke_color == "PLAYER1COLOR":
+            stroke_color = players_color[0]
+        if stroke_color == "PLAYER2COLOR":
+            stroke_color = players_color[1]
+        game = games_available[current_game]
+        x_whiteboard, y_whiteboard = board_to_whiteboard(x, y)
+        infos = {"shape":shape, "x":x_whiteboard+4, "y":y_whiteboard+4, "width":game["length"]-8, "height":game["height"]-8, "color_fill":color_fill,"stroke_color":stroke_color}
+        add_element("shape", infos)
+
+def add_imageurl_in_board(url : str, x : int, y : int):
+    if xy_board_is_in_board(x, y):
+        x_whiteboard, y_whiteboard = board_to_whiteboard(x, y)
+        infos = {"url":url, "x":x_whiteboard+4, "y":y_whiteboard+4}
+        add_element("imageurl", infos)
 
 ### --- FUNCTIONS : HELPERS (WHITEBOARD)
     
@@ -321,6 +416,52 @@ def select_game():
     clear_whiteboard()
     update_current_state(SELECT_GAME, BACKGROUND_COLOR, SELECT_GAME_STATE)
     send_log(SELECT_GAME)
+    if len(games_available) > 2: # Because SELECT_GAME_STATE and REPLAY_GAME_STATE are in
+        global current_game_selection
+        current_game_selection = []
+        real_games = games_available
+        del real_games[SELECT_GAME_STATE]
+        del real_games[REPLAY_GAME_STATE]
+        nb = 1
+        col = games_available[SELECT_GAME_STATE]["board_col"]
+        row = games_available[SELECT_GAME_STATE]["board_row"]
+        if (col * row) != MAX_GAMES:
+            print("INTERNAL ERROR: MAX GAMES DOES NOT MATCH COL AND ROW OF SELECT_GAME_STATE_INFOS")
+            exit(1)
+        for game in real_games:
+            if nb <= MAX_GAMES:
+                current_game_selection.append(game)
+                game_col = nb % col
+                game_row = nb % row
+                add_imageurl_in_board(real_games[game]["game_image"], game_col, game_row)
+            else: # More than 9 games
+                break
+            nb = nb + 1
+
+def replay_game():
+    clear_whiteboard()
+    update_current_state(None, None, REPLAY_GAME_STATE)
+    send_log(REPLAY_GAME)
+    update_current_game_board_infos()
+    add_shape_in_board("rectangle", 1, 1, BACKGROUND_COLOR, "green")
+    add_text_in_board("Rejouer", 1, 1, "black")
+    add_shape_in_board("rectangle", 1, 3, BACKGROUND_COLOR, "red")
+    add_text_in_board("Quitter", 1, 3, "black")
+
+def select_action(x : int, y : int):
+    None
+
+def replay_action(x : int, y : int):
+    if xy_board_is_in_board(x, y):
+        if x == 1 and y == 1: # If replay
+            play(last_game_played)
+        if x == 1 and y == 3: # If leave 
+            set_game_score(0,0)
+            select_game()
+
+def end_of_game():
+    set_last_game_played()
+    replay_game()
 
 def set_last_game_played():
     global last_game_played
@@ -334,26 +475,12 @@ def set_game_score(player1_score : int, player2_score : int):
         current_game_score[1] = player2_score
 
 def play(game : str):
-    if game != SELECT_GAME_STATE:
-        clear_whiteboard()
-        update_current_state(get_game_score(), None, game)
-        send_log("Début d'une partie de : " + current_game)
-        reset_game()
-        update_board_infos()
-        add_element("imageurl",{"url":games_available[current_game]["board"],"x":current_board_location[0],"y":current_board_location[1]})
-    else:
-        select_game()
-
-def end_of_game(): ### TBD ###
-    set_last_game_played()
-    update_current_state(None, None, REPLAY_GAME_STATE)
-    # Afficher bouton retry
-    # Attendre click sur un bouton
-    if True: # Si rejouer alors ### TEMP ###
-        play(last_game_played)
-    else: # Sinon revenir à la selection de jeu
-        set_game_score(0,0)
-        play(SELECT_GAME_STATE)
+    clear_whiteboard()
+    update_current_state(get_game_score(), None, game)
+    send_log("Début d'une partie de : " + current_game)
+    reset_game()
+    update_current_game_board_infos()
+    add_element("imageurl",{"url":games_available[current_game]["board"],"x":current_board_location[0],"y":current_board_location[1]})
 
 ### --- FUNCTIONS : CORE PROGRAM
 
