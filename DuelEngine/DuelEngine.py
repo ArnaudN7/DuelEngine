@@ -9,11 +9,15 @@ import threading
 NAME = "DuelEngine"
 SELECT_GAME = "Sélectionnez un jeu !"
 REPLAY_GAME = "Souhaitez-vous rejouer ?"
+COLOR_MENU = "Changez les couleurs des joueurs !"
 SELECT_GAME_STATE = "selectGame"
 REPLAY_GAME_STATE = "replayGame"
-MAX_GAMES = 9 # Should be equal to board_col * board_row of SELECT_GAME_STATE_INFOS
-SELECT_GAME_STATE_INFOS = {"length":300, "height":300, "board_col":3, "board_row":3}
+COLOR_MENU_STATE = "colorMenu"
+MAX_GAMES = 4 # Should be equal to board_col * board_row of SELECT_GAME_STATE_INFOS
+SELECT_GAME_STATE_INFOS = {"length":300, "height":300, "board_col":2, "board_row":2}
 REPLAY_GAME_STATE_INFOS = {"length":135, "height":55, "board_col":1, "board_row":3}
+COLORS_AVAILABLES = ["#0048ba","#a52a2a","#66cdaa","#f2b31c","#ffefdb","#ffc0cb","#9966cc","#cccccc","#7fffd4"]
+COLOR_MENU_STATE_INFOS = {"length":60, "height":60, "board_col":9, "board_row":9}
 BACKGROUND_COLOR = "#FFFFFF"
 TOUR_J1 = "Joueur 1 commence son tour."
 TOUR_J2 = "Joueur 2 commence son tour."
@@ -49,6 +53,8 @@ def service_callback(sender_agent_name, sender_agent_uuid, service_name, argumen
         case (sender_agent_name,"gameUnregister"):
             if sender_agent_name in games_available: # Game already added
                 del games_available[sender_agent_name]
+                if current_game == SELECT_GAME_STATE: # If we are selecting a game
+                    select_game() # Refresh the select screen not to display the old game
             if current_game == sender_agent_name:
                 select_game()
                 send_log(GAME_UNREGISTERED_DURING_GAME)
@@ -97,6 +103,14 @@ def on_agent_event_callback(event, uuid, name, event_data, my_data): ### TBD ###
     # Solution : OUTPUT Safe => renvoyer l'état courant qui est connu de tous, le titre le fond etc mais pas l'état initial
     if event == igs.AGENT_KNOWS_US and name == "Whiteboard":
         output_current_state() #updateNewWhiteboard
+    if event == igs.AGENT_EXITED:
+        if name in games_available: # Game already added
+            del games_available[name]
+            if current_game == SELECT_GAME_STATE: # If we are selecting a game
+                select_game() # Refresh the select screen not to display the old game
+        if current_game == name:
+            select_game()
+            send_log(GAME_UNREGISTERED_DURING_GAME)
 
 def agent_init():
     ### AGENT DEFINITION
@@ -176,6 +190,9 @@ def agent_init():
 def init():
     global program_running
     program_running = True
+    games_available[SELECT_GAME_STATE] = SELECT_GAME_STATE_INFOS # Select menu
+    games_available[REPLAY_GAME_STATE] = REPLAY_GAME_STATE_INFOS # Replay menu
+    games_available[COLOR_MENU_STATE] = COLOR_MENU_STATE_INFOS # Color menu
     select_game()
     anti_moving_guard = threading.Thread(target=elements_not_transposable)
     anti_moving_guard.start()
@@ -190,10 +207,10 @@ current_player_color = ""
 current_game = ""
 last_game_played = ""
 program_running = True
-games_available = {SELECT_GAME_STATE:SELECT_GAME_STATE_INFOS,REPLAY_GAME_STATE:REPLAY_GAME_STATE_INFOS} # {"Morpion":{"game_image":"screen.url","board":"board.url", "length":20, "height":20, board_col":3, "board_row":3},...}
+games_available = {} # {"Morpion":{"game_image":"screen.url","board":"board.url", "length":20, "height":20, board_col":3, "board_row":3},...}
 current_game_selection = [] # Updated in select_game()
 current_game_score = [0,0] # [player1score,player2score]
-players_color = ["#451720","#023124"] # [player1color,player2color]
+players_color = [COLORS_AVAILABLES[0],COLORS_AVAILABLES[1]] # [player1color,player2color]
 current_board_location = [] # top_left_x, top_left_y, bottom_right_x, bottom_right_y
 whiteboard_infos = {"x":0,
                     "y":0,
@@ -228,6 +245,7 @@ def update_current_state(title : str, player_color : str, game : str):
     if game != None:
         global current_game
         current_game = game
+        update_current_game_board_infos()
     
     igs.output_set_string("title_or_score", current_title)
     igs.output_set_string("currentPlayerColor", current_player_color)
@@ -237,10 +255,9 @@ def send_log(log : str):
     igs.output_set_string("lastGameLog", log)
 
 def game_action(x : int, y : int):
-    if xy_board_is_in_board(x, y):
-        igs.output_set_int("x", x)
-        igs.output_set_int("y", y)
-        igs.output_set_impulsion("gameAction")
+    igs.output_set_int("x", x)
+    igs.output_set_int("y", y)
+    igs.output_set_impulsion("gameAction")
 
 def create_shape(shape : str, x : float, y : float, width : float, height : float, color_fill : str, stroke_color : str):
     parameters = (shape, x, y, width, height, color_fill, stroke_color, 1.0)
@@ -335,14 +352,17 @@ def click(x : int, y : int):
     update_whiteboard_infos()
     if is_in_whiteboard(x, y):
         x_whiteboard, y_whiteboard = coord_to_whiteboard(x,y)
-        x_board, y_board = whiteboard_to_board(x_whiteboard, y_whiteboard)
-        if current_game != SELECT_GAME_STATE and current_game != REPLAY_GAME_STATE:
+        if current_game != SELECT_GAME_STATE and current_game != REPLAY_GAME_STATE and current_game != COLOR_MENU_STATE:
+            x_board, y_board = whiteboard_to_board(x_whiteboard, y_whiteboard)
             game_action(x_board, y_board)
         else:
             if current_game == SELECT_GAME_STATE:
-                select_action(x_board, y_board)
+                select_action(x_whiteboard, y_whiteboard)
             else:
-                replay_action(x_board, y_board)
+                if current_game == REPLAY_GAME_STATE:
+                    replay_action(x_whiteboard, y_whiteboard)
+                else:
+                    color_action(x_whiteboard, y_whiteboard)
 
 def player_win(player_id : int): # player_id : 0 or 1
     text_win = ""
@@ -405,7 +425,7 @@ def add_shape_in_board(shape : str, x : int, y : int, color_fill : str, stroke_c
 def add_imageurl_in_board(url : str, x : int, y : int):
     if xy_board_is_in_board(x, y):
         x_whiteboard, y_whiteboard = board_to_whiteboard(x, y)
-        infos = {"url":url, "x":x_whiteboard+4, "y":y_whiteboard+4}
+        infos = {"url":url, "x":x_whiteboard, "y":y_whiteboard}
         add_element("imageurl", infos)
 
 ### --- FUNCTIONS : HELPERS (WHITEBOARD)
@@ -416,48 +436,84 @@ def select_game():
     clear_whiteboard()
     update_current_state(SELECT_GAME, BACKGROUND_COLOR, SELECT_GAME_STATE)
     send_log(SELECT_GAME)
-    if len(games_available) > 2: # Because SELECT_GAME_STATE and REPLAY_GAME_STATE are in
+    add_element("text",{"text":"Menu des couleurs","x":0,"y":0,"color":"black"})
+    if len(games_available) > 2: # Because SELECT_GAME_STATE, REPLAY_GAME_STATE and COLOR_MENU_STATE are in
         global current_game_selection
         current_game_selection = []
-        real_games = games_available
-        del real_games[SELECT_GAME_STATE]
-        del real_games[REPLAY_GAME_STATE]
         nb = 1
         col = games_available[SELECT_GAME_STATE]["board_col"]
         row = games_available[SELECT_GAME_STATE]["board_row"]
         if (col * row) != MAX_GAMES:
             print("INTERNAL ERROR: MAX GAMES DOES NOT MATCH COL AND ROW OF SELECT_GAME_STATE_INFOS")
             exit(1)
-        for game in real_games:
-            if nb <= MAX_GAMES:
-                current_game_selection.append(game)
-                game_col = nb % col
-                game_row = nb % row
-                add_imageurl_in_board(real_games[game]["game_image"], game_col, game_row)
-            else: # More than 9 games
-                break
-            nb = nb + 1
+        for game in games_available:
+            if game != SELECT_GAME_STATE and game != REPLAY_GAME_STATE and game != COLOR_MENU_STATE:
+                if nb <= MAX_GAMES:
+                    current_game_selection.append(game)
+                    game_col = nb % col
+                    game_row = nb % row
+                    add_shape_in_board("rectangle", game_col, game_row, BACKGROUND_COLOR, "black")
+                    add_imageurl_in_board(games_available[game]["game_image"], game_col, game_row)
+                else: # More than 9 games
+                    break
+                nb = nb + 1
 
 def replay_game():
     clear_whiteboard()
     update_current_state(None, None, REPLAY_GAME_STATE)
     send_log(REPLAY_GAME)
-    update_current_game_board_infos()
     add_shape_in_board("rectangle", 1, 1, BACKGROUND_COLOR, "green")
     add_text_in_board("Rejouer", 1, 1, "black")
     add_shape_in_board("rectangle", 1, 3, BACKGROUND_COLOR, "red")
     add_text_in_board("Quitter", 1, 3, "black")
 
-def select_action(x : int, y : int):
-    None
+def color_menu():
+    clear_whiteboard()
+    update_current_state(COLOR_MENU, None, COLOR_MENU_STATE)
+    send_log(COLOR_MENU)
+    add_text_in_board("Couleur du joueur 1", 1, 1, "black")
+    add_text_in_board("Couleur du joueur 2", 1, 5, "black")
+    add_text_in_board("Quitter", 5, 9, "black")
+    nb = 1
+    for color in COLORS_AVAILABLES:
+        add_shape_in_board("rectangle",nb,3,color,"black")
+        add_shape_in_board("rectangle",nb,7,color,"black")
+        nb = nb + 1
+
+def select_action(x : float, y : float):
+    if x < 300.0 and y < 50.0: # Color menu
+        color_menu()
+    else:
+        x_board, y_board = whiteboard_to_board(x, y)
+        if xy_board_is_in_board(x_board, y_board):
+            col = games_available[SELECT_GAME_STATE]["board_col"]
+            num = (x_board + col*(y_board-1)) - 1
+            if num < len(current_game_selection):
+                play(current_game_selection[num])
 
 def replay_action(x : int, y : int):
-    if xy_board_is_in_board(x, y):
-        if x == 1 and y == 1: # If replay
+    x_board, y_board = whiteboard_to_board(x, y)
+    if xy_board_is_in_board(x_board, y_board):
+        if x_board == 1 and y_board == 1: # If replay
             play(last_game_played)
-        if x == 1 and y == 3: # If leave 
+        if x_board == 1 and y_board == 3: # If leave 
             set_game_score(0,0)
             select_game()
+
+def color_action(x : int, y :int):
+    x_board, y_board = whiteboard_to_board(x, y)
+    if xy_board_is_in_board(x_board, y_board):
+        if (x_board == 5 or x_board == 6) and y_board == 9: # If leave
+            select_game()
+        if y_board == 3:
+            players_color[0] = COLORS_AVAILABLES[x_board-1]
+            update_current_state(None,players_color[0],None)
+            send_log("Couleur du joueur 1 modifiée !")
+        if y_board == 7:
+            players_color[1] = COLORS_AVAILABLES[x_board-1]
+            update_current_state(None,players_color[1],None)
+            send_log("Couleur du joueur 2 modifiée !")
+
 
 def end_of_game():
     set_last_game_played()
@@ -479,7 +535,6 @@ def play(game : str):
     update_current_state(get_game_score(), None, game)
     send_log("Début d'une partie de : " + current_game)
     reset_game()
-    update_current_game_board_infos()
     add_element("imageurl",{"url":games_available[current_game]["board"],"x":current_board_location[0],"y":current_board_location[1]})
 
 ### --- FUNCTIONS : CORE PROGRAM

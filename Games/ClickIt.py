@@ -65,8 +65,8 @@ def register():
     igs.service_call("DuelEngine", "gameRegister", arguments, "")
         
 ### GLOBAL VARIABLES
-BOARD = "https://github.com/ArnaudN7/DuelEngine/blob/main/Games/Images/ClickIt.png?raw=true"
-GAME_IMAGE = "https://play-lh.googleusercontent.com/zPxLgj5nvl20ahJV7aFC6S5mD8kii5CEEDj25j1P9CYAfXL9sdDuO-8eES0r4DhJHrU"
+BOARD = "https://github.com/ArnaudN7/DuelEngine/blob/main/Games/Images/ClickIt_board.png?raw=true"
+GAME_IMAGE = "https://github.com/ArnaudN7/DuelEngine/blob/main/Games/Images/ClickIt_game_image.png?raw=true"
 CASE_LENGTH = 200
 BOARD_COL = 3
 BOARD_ROW = 3
