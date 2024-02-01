@@ -198,8 +198,16 @@
             {
                 "eventInstances": [
                     {
+                        "refId": 4,
+                        "startTime": 19320
+                    },
+                    {
                         "refId": 2,
                         "startTime": 8500
+                    },
+                    {
+                        "refId": 5,
+                        "startTime": 0
                     },
                     {
                         "refId": 1,
@@ -208,14 +216,6 @@
                     {
                         "refId": 3,
                         "startTime": 8000
-                    },
-                    {
-                        "refId": 4,
-                        "startTime": 19320
-                    },
-                    {
-                        "refId": 5,
-                        "startTime": 0
                     }
                 ],
                 "name": "Timeline_1",
@@ -645,9 +645,9 @@
                 "view": {
                     "height": 40,
                     "isCollapsed": false,
-                    "positionX": 448,
-                    "positionY": -804,
-                    "positionZ": 11.4999999999998,
+                    "positionX": 394,
+                    "positionY": -811,
+                    "positionZ": 11.689999999999795,
                     "width": 252
                 }
             },
@@ -685,17 +685,17 @@
                         },
                         {
                             "description": "",
+                            "name": "tie",
+                            "type": "IMPULSION"
+                        },
+                        {
+                            "description": "",
                             "name": "player1_turn",
                             "type": "IMPULSION"
                         },
                         {
                             "description": "",
                             "name": "player2_turn",
-                            "type": "IMPULSION"
-                        },
-                        {
-                            "description": "",
-                            "name": "tie",
                             "type": "IMPULSION"
                         }
                     ],
@@ -935,7 +935,7 @@
                     "isCollapsed": false,
                     "positionX": -14,
                     "positionY": -649,
-                    "positionZ": 11.509999999999799,
+                    "positionZ": 11.669999999999796,
                     "width": 272
                 }
             },
@@ -985,7 +985,7 @@
                     "isCollapsed": false,
                     "positionX": -435,
                     "positionY": -674,
-                    "positionZ": 10.709999999999816,
+                    "positionZ": 11.679999999999795,
                     "width": 252
                 }
             },
@@ -1037,17 +1037,17 @@
                         },
                         {
                             "description": "",
+                            "name": "tie",
+                            "type": "IMPULSION"
+                        },
+                        {
+                            "description": "",
                             "name": "player1_turn",
                             "type": "IMPULSION"
                         },
                         {
                             "description": "",
                             "name": "player2_turn",
-                            "type": "IMPULSION"
-                        },
-                        {
-                            "description": "",
-                            "name": "tie",
                             "type": "IMPULSION"
                         }
                     ],
@@ -1068,9 +1068,9 @@
                 "view": {
                     "height": 40,
                     "isCollapsed": false,
-                    "positionX": 440,
-                    "positionY": -598,
-                    "positionZ": 11.259999999999804,
+                    "positionX": 397,
+                    "positionY": -601,
+                    "positionZ": 11.649999999999796,
                     "width": 252
                 }
             },
@@ -1153,9 +1153,9 @@
                 "view": {
                     "height": 40,
                     "isCollapsed": false,
-                    "positionX": 430,
-                    "positionY": -335,
-                    "positionZ": 11.519999999999799,
+                    "positionX": 397,
+                    "positionY": -417,
+                    "positionZ": 11.639999999999796,
                     "width": 252
                 }
             }
@@ -1187,54 +1187,6 @@
             },
             {
                 "fromAgent": "DuelEngine",
-                "fromInput": "player1_win",
-                "toAgent": "ClickIt",
-                "toOutput": "player1_win"
-            },
-            {
-                "fromAgent": "DuelEngine",
-                "fromInput": "player2_win",
-                "toAgent": "ClickIt",
-                "toOutput": "player2_win"
-            },
-            {
-                "fromAgent": "DuelEngine",
-                "fromInput": "player1_turn",
-                "toAgent": "ClickIt",
-                "toOutput": "player1_turn"
-            },
-            {
-                "fromAgent": "DuelEngine",
-                "fromInput": "player2_turn",
-                "toAgent": "ClickIt",
-                "toOutput": "player2_turn"
-            },
-            {
-                "fromAgent": "ClickIt",
-                "fromInput": "action",
-                "toAgent": "DuelEngine",
-                "toOutput": "gameAction"
-            },
-            {
-                "fromAgent": "ClickIt",
-                "fromInput": "x",
-                "toAgent": "DuelEngine",
-                "toOutput": "x"
-            },
-            {
-                "fromAgent": "ClickIt",
-                "fromInput": "y",
-                "toAgent": "DuelEngine",
-                "toOutput": "y"
-            },
-            {
-                "fromAgent": "ClickIt",
-                "fromInput": "currentGame",
-                "toAgent": "DuelEngine",
-                "toOutput": "currentGame"
-            },
-            {
-                "fromAgent": "DuelEngine",
                 "fromInput": "mouse_x",
                 "toAgent": "MouseSensor",
                 "toOutput": "mouse_x"
@@ -1244,78 +1196,6 @@
                 "fromInput": "mouse_y",
                 "toAgent": "MouseSensor",
                 "toOutput": "mouse_y"
-            },
-            {
-                "fromAgent": "ClickIt",
-                "fromInput": "reset",
-                "toAgent": "DuelEngine",
-                "toOutput": "gameReset"
-            },
-            {
-                "fromAgent": "DuelEngine",
-                "fromInput": "tie",
-                "toAgent": "ClickIt",
-                "toOutput": "tie"
-            },
-            {
-                "fromAgent": "Morpion",
-                "fromInput": "currentGame",
-                "toAgent": "DuelEngine",
-                "toOutput": "currentGame"
-            },
-            {
-                "fromAgent": "Morpion",
-                "fromInput": "x",
-                "toAgent": "DuelEngine",
-                "toOutput": "x"
-            },
-            {
-                "fromAgent": "Morpion",
-                "fromInput": "y",
-                "toAgent": "DuelEngine",
-                "toOutput": "y"
-            },
-            {
-                "fromAgent": "Morpion",
-                "fromInput": "action",
-                "toAgent": "DuelEngine",
-                "toOutput": "gameAction"
-            },
-            {
-                "fromAgent": "Morpion",
-                "fromInput": "reset",
-                "toAgent": "DuelEngine",
-                "toOutput": "gameReset"
-            },
-            {
-                "fromAgent": "DuelEngine",
-                "fromInput": "player1_win",
-                "toAgent": "Morpion",
-                "toOutput": "player1_win"
-            },
-            {
-                "fromAgent": "DuelEngine",
-                "fromInput": "player2_win",
-                "toAgent": "Morpion",
-                "toOutput": "player2_win"
-            },
-            {
-                "fromAgent": "DuelEngine",
-                "fromInput": "tie",
-                "toAgent": "Morpion",
-                "toOutput": "tie"
-            },
-            {
-                "fromAgent": "DuelEngine",
-                "fromInput": "player1_turn",
-                "toAgent": "Morpion",
-                "toOutput": "player1_turn"
-            },
-            {
-                "fromAgent": "DuelEngine",
-                "fromInput": "player2_turn",
-                "toAgent": "Morpion",
-                "toOutput": "player2_turn"
             }
         ],
         "splits": [
