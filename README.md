@@ -1,7 +1,7 @@
 # DuelEngine
 
 ## Documentation
-Pour toute information relative au développement du projet, à l'organisation du dépôt ou à son contenu, veuillez-vous référer au fichier ==Documentation.md== présent dans ce même répertoire.
+Pour toute information relative au développement du projet, à l'organisation du dépôt ou à son contenu, veuillez-vous référer au fichier **Documentation.md** présent dans ce même répertoire.
 Dans ce fichier ne sera détaillé que la mise en place et l'exécution du programme
 
 ## Installation recommandée
@@ -16,7 +16,7 @@ Vous pouvez les installer avec les commandes suivantes :
 - pygetwindow : pip install PyGetWindow
 
 ## Exécution (Windows)
-Des fichiers pour une exécution sous Windows sont déjà présents dans le répertoire ==Launcher==.
+Des fichiers pour une exécution sous Windows sont déjà présents dans le répertoire **Launcher**.
 En effet, 5 scripts PowerShell sont présents et suivant la nommenclature *launch_agentname.ps1* :
 - L'agent DuelEngine : le programme principal
 - L'agent Whiteboard : l'agent fourni pour ce projet
