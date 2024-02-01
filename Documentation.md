@@ -14,7 +14,12 @@
 11. [Évolution](#évolution)
 12. [Bilan](#bilan)
 
-## Sujet du projet
+## Projet
+### Composition du groupe
+Arnaud F.
+
+### Sujet
+
 
 ## Architecture du dépôt
 
