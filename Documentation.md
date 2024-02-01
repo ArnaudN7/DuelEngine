@@ -1,18 +1,18 @@
 # Documentation
 
 ## Sommaire
-[Sujet du projet](#sujet-du-projet)
-[Architecture du dépôt](#architecture-du-dépôt)
-[Choix](#choix)
-[Architecture Ingescape circle](#architecture-ingescape-circle)
-[Originale](#originale)
-[Finale](#finale)
-[Fonctionnalités](#fonctionnalités)
-[Ingescape](#ingescape)
-[Tests](#tests)
-[Limites](#limites)
-[Évolution](#évolution)
-[Bilan](#bilan)
+1. [Sujet du projet](#sujet-du-projet)
+2. [Architecture du dépôt](#architecture-du-dépôt)
+3. [Choix](#choix)
+4. [Architecture Ingescape circle](#architecture-ingescape-circle)
+5. [Originale](#originale)
+6. [Finale](#finale)
+7. [Fonctionnalités](#fonctionnalités)
+8. [Ingescape](#ingescape)
+9. [Tests](#tests)
+10. [Limites](#limites)
+11. [Évolution](#évolution)
+12. [Bilan](#bilan)
 
 ## Sujet du projet
 
