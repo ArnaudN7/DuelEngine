@@ -198,24 +198,24 @@
             {
                 "eventInstances": [
                     {
-                        "refId": 2,
-                        "startTime": 8500
-                    },
-                    {
-                        "refId": 3,
-                        "startTime": 8000
+                        "refId": 4,
+                        "startTime": 19320
                     },
                     {
                         "refId": 5,
                         "startTime": 0
                     },
                     {
+                        "refId": 2,
+                        "startTime": 8500
+                    },
+                    {
                         "refId": 1,
                         "startTime": 8000
                     },
                     {
-                        "refId": 4,
-                        "startTime": 19320
+                        "refId": 3,
+                        "startTime": 8000
                     }
                 ],
                 "name": "Timeline_1",
@@ -647,7 +647,7 @@
                     "isCollapsed": false,
                     "positionX": 448,
                     "positionY": -804,
-                    "positionZ": 11.209999999999805,
+                    "positionZ": 11.4999999999998,
                     "width": 252
                 }
             },
@@ -695,7 +695,7 @@
                         },
                         {
                             "description": "",
-                            "name": "forDev",
+                            "name": "tie",
                             "type": "IMPULSION"
                         }
                     ],
@@ -874,25 +874,44 @@
                         },
                         {
                             "arguments": [
-                                {
-                                    "name": "gameName",
-                                    "type": "STRING"
-                                }
-                            ],
-                            "name": "gameUregister"
-                        },
-                        {
-                            "arguments": [
                             ],
                             "name": "gameUnregister"
                         },
                         {
                             "arguments": [
+                                {
+                                    "name": "text",
+                                    "type": "STRING"
+                                },
+                                {
+                                    "name": "x",
+                                    "type": "INTEGER"
+                                },
+                                {
+                                    "name": "y",
+                                    "type": "INTEGER"
+                                },
+                                {
+                                    "name": "color",
+                                    "type": "STRING"
+                                }
                             ],
                             "name": "addTextInBoard"
                         },
                         {
                             "arguments": [
+                                {
+                                    "name": "url",
+                                    "type": "STRING"
+                                },
+                                {
+                                    "name": "x",
+                                    "type": "INTEGER"
+                                },
+                                {
+                                    "name": "y",
+                                    "type": "INTEGER"
+                                }
                             ],
                             "name": "addImageurlInBoard"
                         }
@@ -912,7 +931,7 @@
                     "isCollapsed": false,
                     "positionX": -14,
                     "positionY": -649,
-                    "positionZ": 11.269999999999804,
+                    "positionZ": 11.509999999999799,
                     "width": 272
                 }
             },
@@ -1021,6 +1040,11 @@
                             "description": "",
                             "name": "player2_turn",
                             "type": "IMPULSION"
+                        },
+                        {
+                            "description": "",
+                            "name": "tie",
+                            "type": "IMPULSION"
                         }
                     ],
                     "parameters": [
@@ -1050,7 +1074,7 @@
                 "data": {
                 },
                 "definition": {
-                    "description": "",
+                    "description": "The classic",
                     "family": "",
                     "inputs": [
                         {
@@ -1080,7 +1104,7 @@
                         }
                     ],
                     "isDynamic": false,
-                    "name": "AnyOtherGame",
+                    "name": "Morpion",
                     "outputs": [
                         {
                             "description": "",
@@ -1090,6 +1114,11 @@
                         {
                             "description": "",
                             "name": "player2_win",
+                            "type": "IMPULSION"
+                        },
+                        {
+                            "description": "",
+                            "name": "tie",
                             "type": "IMPULSION"
                         },
                         {
@@ -1109,55 +1138,20 @@
                     ],
                     "version": "1.0"
                 },
-                "identity": "AnyOtherGame",
+                "identity": "Morpion",
                 "instances": [
-                ],
-                "view": {
-                    "height": 54,
-                    "isCollapsed": false,
-                    "positionX": 441,
-                    "positionY": -399,
-                    "positionZ": 10.589999999999819,
-                    "width": 252
-                }
-            },
-            {
-                "data": {
-                },
-                "definition": {
-                    "description": "",
-                    "family": "",
-                    "inputs": [
-                        {
-                            "description": "",
-                            "name": "new_input",
-                            "type": "IMPULSION"
-                        }
-                    ],
-                    "isDynamic": false,
-                    "name": "new_agent",
-                    "outputs": [
-                        {
-                            "description": "",
-                            "name": "new_output",
-                            "type": "IMPULSION"
-                        }
-                    ],
-                    "parameters": [
-                    ],
-                    "services": [
-                    ],
-                    "version": "1.0"
-                },
-                "identity": "new_agent",
-                "instances": [
+                    {
+                        "commandLine": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.12_3.12.496.0_x64__qbz5n2kfra8p0\\python3.12.exe",
+                        "hostname": "ARNO-PC",
+                        "ipAddress": "127.0.0.1"
+                    }
                 ],
                 "view": {
                     "height": 40,
                     "isCollapsed": false,
-                    "positionX": -29,
-                    "positionY": -970,
-                    "positionZ": 9.739999999999837,
+                    "positionX": 430,
+                    "positionY": -300,
+                    "positionZ": 11.519999999999799,
                     "width": 252
                 }
             }
@@ -1212,52 +1206,10 @@
                 "toOutput": "player2_turn"
             },
             {
-                "fromAgent": "DuelEngine",
-                "fromInput": "player1_win",
-                "toAgent": "AnyOtherGame",
-                "toOutput": "player1_win"
-            },
-            {
-                "fromAgent": "DuelEngine",
-                "fromInput": "player2_win",
-                "toAgent": "AnyOtherGame",
-                "toOutput": "player2_win"
-            },
-            {
-                "fromAgent": "DuelEngine",
-                "fromInput": "player1_turn",
-                "toAgent": "AnyOtherGame",
-                "toOutput": "player1_turn"
-            },
-            {
-                "fromAgent": "DuelEngine",
-                "fromInput": "player2_turn",
-                "toAgent": "AnyOtherGame",
-                "toOutput": "player2_turn"
-            },
-            {
-                "fromAgent": "AnyOtherGame",
-                "fromInput": "action",
-                "toAgent": "DuelEngine",
-                "toOutput": "gameAction"
-            },
-            {
                 "fromAgent": "ClickIt",
                 "fromInput": "action",
                 "toAgent": "DuelEngine",
                 "toOutput": "gameAction"
-            },
-            {
-                "fromAgent": "AnyOtherGame",
-                "fromInput": "y",
-                "toAgent": "DuelEngine",
-                "toOutput": "y"
-            },
-            {
-                "fromAgent": "AnyOtherGame",
-                "fromInput": "x",
-                "toAgent": "DuelEngine",
-                "toOutput": "x"
             },
             {
                 "fromAgent": "ClickIt",
@@ -1272,40 +1224,10 @@
                 "toOutput": "y"
             },
             {
-                "fromAgent": "AnyOtherGame",
-                "fromInput": "currentGame",
-                "toAgent": "DuelEngine",
-                "toOutput": "currentGame"
-            },
-            {
                 "fromAgent": "ClickIt",
                 "fromInput": "currentGame",
                 "toAgent": "DuelEngine",
                 "toOutput": "currentGame"
-            },
-            {
-                "fromAgent": "78850fa1-b519-41d8-bcb9-52bbb5f8586d",
-                "fromInput": "wildcard",
-                "toAgent": "MouseSensor",
-                "toOutput": "mouse_x"
-            },
-            {
-                "fromAgent": "617e5d28-5fa4-414a-931c-9b3a80355380",
-                "fromInput": "wildcard",
-                "toAgent": "MouseSensor",
-                "toOutput": "mouse_y"
-            },
-            {
-                "fromAgent": "f6f05658-53da-4250-b4e8-767c8ba3ebe4",
-                "fromInput": "wildcard",
-                "toAgent": "MouseSensor",
-                "toOutput": "click"
-            },
-            {
-                "fromAgent": "8c34b782-3e81-4e96-b3f8-718d10672a5b",
-                "fromInput": "wildcard",
-                "toAgent": "DuelEngine",
-                "toOutput": "title_or_score"
             },
             {
                 "fromAgent": "DuelEngine",
@@ -1320,40 +1242,88 @@
                 "toOutput": "mouse_y"
             },
             {
-                "fromAgent": "dc941407-0bbe-4ebd-9331-a230714b546c",
-                "fromInput": "wildcard",
-                "toAgent": "DuelEngine",
-                "toOutput": "x"
-            },
-            {
-                "fromAgent": "1e78e4b2-6dfe-4e52-aac6-ae865016565f",
-                "fromInput": "wildcard",
-                "toAgent": "DuelEngine",
-                "toOutput": "y"
-            },
-            {
-                "fromAgent": "5f2bc8fa-dab1-49e2-b080-20db72302974",
-                "fromInput": "wildcard",
-                "toAgent": "DuelEngine",
-                "toOutput": "gameAction"
-            },
-            {
-                "fromAgent": "DuelEngine",
-                "fromInput": "forDev",
-                "toAgent": "bad06426-fa75-4372-9125-808e11ea765d",
-                "toOutput": "value"
-            },
-            {
                 "fromAgent": "ClickIt",
                 "fromInput": "reset",
                 "toAgent": "DuelEngine",
                 "toOutput": "gameReset"
             },
             {
-                "fromAgent": "c99c179c-0e6f-485b-b322-650649d4ee25",
-                "fromInput": "wildcard",
+                "fromAgent": "DuelEngine",
+                "fromInput": "tie",
+                "toAgent": "ClickIt",
+                "toOutput": "tie"
+            },
+            {
+                "fromAgent": "Morpion",
+                "fromInput": "currentGame",
                 "toAgent": "DuelEngine",
                 "toOutput": "currentGame"
+            },
+            {
+                "fromAgent": "Morpion",
+                "fromInput": "x",
+                "toAgent": "DuelEngine",
+                "toOutput": "x"
+            },
+            {
+                "fromAgent": "Morpion",
+                "fromInput": "y",
+                "toAgent": "DuelEngine",
+                "toOutput": "y"
+            },
+            {
+                "fromAgent": "Morpion",
+                "fromInput": "action",
+                "toAgent": "DuelEngine",
+                "toOutput": "gameAction"
+            },
+            {
+                "fromAgent": "Morpion",
+                "fromInput": "reset",
+                "toAgent": "DuelEngine",
+                "toOutput": "gameReset"
+            },
+            {
+                "fromAgent": "5bd557ab-c9b2-4da5-a1d9-6efb409d1893",
+                "fromInput": "wildcard",
+                "toAgent": "DuelEngine",
+                "toOutput": "y"
+            },
+            {
+                "fromAgent": "c8b4110a-bda0-4357-b534-fc2371e5656b",
+                "fromInput": "wildcard",
+                "toAgent": "DuelEngine",
+                "toOutput": "x"
+            },
+            {
+                "fromAgent": "DuelEngine",
+                "fromInput": "player1_win",
+                "toAgent": "Morpion",
+                "toOutput": "player1_win"
+            },
+            {
+                "fromAgent": "DuelEngine",
+                "fromInput": "player2_win",
+                "toAgent": "Morpion",
+                "toOutput": "player2_win"
+            },
+            {
+                "fromAgent": "DuelEngine",
+                "fromInput": "tie",
+                "toAgent": "Morpion",
+                "toOutput": "tie"
+            },
+            {
+                "fromAgent": "DuelEngine",
+                "fromInput": "player1_turn",
+                "toAgent": "Morpion",
+                "toOutput": "player1_turn"
+            },
+            {
+                "fromAgent": "DuelEngine",
+                "fromInput": "player2_turn",
+                "toAgent": "Morpion",
+                "toOutput": "player2_turn"
             }
         ],
         "splits": [
@@ -1384,15 +1354,15 @@
                     ],
                     "version": ""
                 },
-                "identity": "78850fa1-b519-41d8-bcb9-52bbb5f8586d",
+                "identity": "5bd557ab-c9b2-4da5-a1d9-6efb409d1893",
                 "instances": [
                 ],
                 "view": {
                     "height": 46,
                     "isCollapsed": false,
-                    "positionX": -70,
-                    "positionY": -791,
-                    "positionZ": 8.849999999999856,
+                    "positionX": 91,
+                    "positionY": -147,
+                    "positionZ": 11.4699999999998,
                     "width": 180
                 }
             },
@@ -1419,469 +1389,16 @@
                     ],
                     "version": ""
                 },
-                "identity": "617e5d28-5fa4-414a-931c-9b3a80355380",
+                "identity": "c8b4110a-bda0-4357-b534-fc2371e5656b",
                 "instances": [
                 ],
                 "view": {
                     "height": 46,
                     "isCollapsed": false,
-                    "positionX": -70,
-                    "positionY": -718,
-                    "positionZ": 8.889999999999855,
+                    "positionX": 93,
+                    "positionY": -221,
+                    "positionZ": 11.4799999999998,
                     "width": 180
-                }
-            },
-            {
-                "data": {
-                },
-                "definition": {
-                    "description": "",
-                    "family": "7fc274c8-b06e-429b-9d09-d14878381016",
-                    "inputs": [
-                        {
-                            "description": "",
-                            "name": "wildcard",
-                            "type": "WILDCARD_SINGLE_MAPPING"
-                        }
-                    ],
-                    "isDynamic": false,
-                    "name": "",
-                    "outputs": [
-                    ],
-                    "parameters": [
-                    ],
-                    "services": [
-                    ],
-                    "version": ""
-                },
-                "identity": "f6f05658-53da-4250-b4e8-767c8ba3ebe4",
-                "instances": [
-                ],
-                "view": {
-                    "height": 46,
-                    "isCollapsed": false,
-                    "positionX": 127,
-                    "positionY": -715,
-                    "positionZ": 8.919999999999854,
-                    "width": 180
-                }
-            },
-            {
-                "data": {
-                },
-                "definition": {
-                    "description": "",
-                    "family": "7fc274c8-b06e-429b-9d09-d14878381016",
-                    "inputs": [
-                        {
-                            "description": "",
-                            "name": "wildcard",
-                            "type": "WILDCARD_SINGLE_MAPPING"
-                        }
-                    ],
-                    "isDynamic": false,
-                    "name": "",
-                    "outputs": [
-                    ],
-                    "parameters": [
-                    ],
-                    "services": [
-                    ],
-                    "version": ""
-                },
-                "identity": "8c34b782-3e81-4e96-b3f8-718d10672a5b",
-                "instances": [
-                ],
-                "view": {
-                    "height": 46,
-                    "isCollapsed": false,
-                    "positionX": 263,
-                    "positionY": -881,
-                    "positionZ": 10.719999999999816,
-                    "width": 398
-                }
-            },
-            {
-                "data": {
-                },
-                "definition": {
-                    "description": "",
-                    "family": "7fc274c8-b06e-429b-9d09-d14878381016",
-                    "inputs": [
-                        {
-                            "description": "",
-                            "name": "wildcard",
-                            "type": "WILDCARD_SINGLE_MAPPING"
-                        }
-                    ],
-                    "isDynamic": false,
-                    "name": "",
-                    "outputs": [
-                    ],
-                    "parameters": [
-                    ],
-                    "services": [
-                    ],
-                    "version": ""
-                },
-                "identity": "c99c179c-0e6f-485b-b322-650649d4ee25",
-                "instances": [
-                ],
-                "view": {
-                    "height": 46,
-                    "isCollapsed": false,
-                    "positionX": -60,
-                    "positionY": -222,
-                    "positionZ": 10.99999999999981,
-                    "width": 383
-                }
-            },
-            {
-                "data": {
-                    "entry 0": ""
-                },
-                "definition": {
-                    "description": "",
-                    "family": "fbba66d6-8d60-4694-b5fa-63b6f3f51e63",
-                    "inputs": [
-                        {
-                            "description": "",
-                            "name": "trigger",
-                            "type": "IMPULSION"
-                        }
-                    ],
-                    "isDynamic": false,
-                    "name": "",
-                    "outputs": [
-                        {
-                            "description": "",
-                            "name": "value",
-                            "type": "IMPULSION"
-                        }
-                    ],
-                    "parameters": [
-                    ],
-                    "services": [
-                    ],
-                    "version": ""
-                },
-                "identity": "bad06426-fa75-4372-9125-808e11ea765d",
-                "instances": [
-                ],
-                "view": {
-                    "height": 52,
-                    "isCollapsed": false,
-                    "positionX": -703,
-                    "positionY": -428,
-                    "positionZ": 11.289999999999804,
-                    "width": 256
-                }
-            },
-            {
-                "data": {
-                    "selectedAgent": "ClickIt"
-                },
-                "definition": {
-                    "description": "",
-                    "family": "7fc274c8-b06e-548p-9d09-d147878381016",
-                    "inputs": [
-                    ],
-                    "isDynamic": false,
-                    "name": "",
-                    "outputs": [
-                    ],
-                    "parameters": [
-                    ],
-                    "services": [
-                    ],
-                    "version": ""
-                },
-                "identity": "678f975c-14a8-4f38-bc2e-e698fd7c858b",
-                "instances": [
-                ],
-                "view": {
-                    "height": 380,
-                    "isCollapsed": false,
-                    "positionX": -856,
-                    "positionY": -1185,
-                    "positionZ": 11.279999999999804,
-                    "width": 882
-                }
-            },
-            {
-                "data": {
-                    "arguments": [
-                        {
-                            "shape": "rectangle"
-                        },
-                        {
-                            "x": "2"
-                        },
-                        {
-                            "y": "2"
-                        },
-                        {
-                            "color_fill": "PLAYER1COLOR"
-                        },
-                        {
-                            "stroke_color": "PLAYER1COLOR"
-                        },
-                        {
-                            "text": ""
-                        },
-                        {
-                            "color": ""
-                        },
-                        {
-                            "url": ""
-                        }
-                    ],
-                    "selectedAgent": "DuelEngine",
-                    "selectedService": "addShapeInBoard"
-                },
-                "definition": {
-                    "description": "",
-                    "family": "7fc274c8-b06e-548p-9d09-d14878381016",
-                    "inputs": [
-                        {
-                            "description": "",
-                            "name": "trigger",
-                            "type": "IMPULSION"
-                        }
-                    ],
-                    "isDynamic": false,
-                    "name": "",
-                    "outputs": [
-                    ],
-                    "parameters": [
-                    ],
-                    "services": [
-                    ],
-                    "version": ""
-                },
-                "identity": "345be330-3f8c-4c0f-8434-e76d32f16d4b",
-                "instances": [
-                ],
-                "view": {
-                    "height": 263,
-                    "isCollapsed": false,
-                    "positionX": -839,
-                    "positionY": -324,
-                    "positionZ": 11.199999999999806,
-                    "width": 265
-                }
-            },
-            {
-                "data": {
-                    "arguments": [
-                        {
-                            "gameName": "ClickIt"
-                        },
-                        {
-                            "board": "https://github.com/ArnaudN7/DuelEngine/blob/main/Games/Images/ClickIt.png?raw=true"
-                        },
-                        {
-                            "game_image": "https://play-lh.googleusercontent.com/zPxLgj5nvl20ahJV7aFC6S5mD8kii5CEEDj25j1P9CYAfXL9sdDuO-8eES0r4DhJHrU"
-                        },
-                        {
-                            "length": "200"
-                        },
-                        {
-                            "board_col": "3"
-                        },
-                        {
-                            "board_row": "3"
-                        },
-                        {
-                            "height": "0"
-                        }
-                    ],
-                    "selectedAgent": "DuelEngine",
-                    "selectedService": "gameRegister"
-                },
-                "definition": {
-                    "description": "",
-                    "family": "7fc274c8-b06e-548p-9d09-d14878381016",
-                    "inputs": [
-                        {
-                            "description": "",
-                            "name": "trigger",
-                            "type": "IMPULSION"
-                        }
-                    ],
-                    "isDynamic": false,
-                    "name": "",
-                    "outputs": [
-                    ],
-                    "parameters": [
-                    ],
-                    "services": [
-                    ],
-                    "version": ""
-                },
-                "identity": "610616c5-bd8d-461e-9ec1-1aaca914cce1",
-                "instances": [
-                ],
-                "view": {
-                    "height": 415,
-                    "isCollapsed": false,
-                    "positionX": 745,
-                    "positionY": -863,
-                    "positionZ": 10.699999999999816,
-                    "width": 659
-                }
-            },
-            {
-                "data": {
-                },
-                "definition": {
-                    "description": "",
-                    "family": "7fc274c8-b06e-429b-9d09-d14878381016",
-                    "inputs": [
-                        {
-                            "description": "",
-                            "name": "wildcard",
-                            "type": "WILDCARD_SINGLE_MAPPING"
-                        }
-                    ],
-                    "isDynamic": false,
-                    "name": "",
-                    "outputs": [
-                    ],
-                    "parameters": [
-                    ],
-                    "services": [
-                    ],
-                    "version": ""
-                },
-                "identity": "dc941407-0bbe-4ebd-9331-a230714b546c",
-                "instances": [
-                ],
-                "view": {
-                    "height": 46,
-                    "isCollapsed": false,
-                    "positionX": 1011,
-                    "positionY": -276,
-                    "positionZ": 9.839999999999835,
-                    "width": 180
-                }
-            },
-            {
-                "data": {
-                },
-                "definition": {
-                    "description": "",
-                    "family": "7fc274c8-b06e-429b-9d09-d14878381016",
-                    "inputs": [
-                        {
-                            "description": "",
-                            "name": "wildcard",
-                            "type": "WILDCARD_SINGLE_MAPPING"
-                        }
-                    ],
-                    "isDynamic": false,
-                    "name": "",
-                    "outputs": [
-                    ],
-                    "parameters": [
-                    ],
-                    "services": [
-                    ],
-                    "version": ""
-                },
-                "identity": "1e78e4b2-6dfe-4e52-aac6-ae865016565f",
-                "instances": [
-                ],
-                "view": {
-                    "height": 46,
-                    "isCollapsed": false,
-                    "positionX": 1010,
-                    "positionY": -190,
-                    "positionZ": 9.849999999999834,
-                    "width": 180
-                }
-            },
-            {
-                "data": {
-                },
-                "definition": {
-                    "description": "",
-                    "family": "7fc274c8-b06e-429b-9d09-d14878381016",
-                    "inputs": [
-                        {
-                            "description": "",
-                            "name": "wildcard",
-                            "type": "WILDCARD_SINGLE_MAPPING"
-                        }
-                    ],
-                    "isDynamic": false,
-                    "name": "",
-                    "outputs": [
-                    ],
-                    "parameters": [
-                    ],
-                    "services": [
-                    ],
-                    "version": ""
-                },
-                "identity": "5f2bc8fa-dab1-49e2-b080-20db72302974",
-                "instances": [
-                ],
-                "view": {
-                    "height": 46,
-                    "isCollapsed": false,
-                    "positionX": 1010,
-                    "positionY": -110,
-                    "positionZ": 9.859999999999834,
-                    "width": 180
-                }
-            },
-            {
-                "data": {
-                    "arguments": [
-                        {
-                            "elementId": "0"
-                        },
-                        {
-                            "x": "1"
-                        },
-                        {
-                            "y": "10"
-                        }
-                    ],
-                    "selectedAgent": "Whiteboard",
-                    "selectedService": "moveTo"
-                },
-                "definition": {
-                    "description": "",
-                    "family": "7fc274c8-b06e-548p-9d09-d14878381016",
-                    "inputs": [
-                        {
-                            "description": "",
-                            "name": "trigger",
-                            "type": "IMPULSION"
-                        }
-                    ],
-                    "isDynamic": false,
-                    "name": "",
-                    "outputs": [
-                    ],
-                    "parameters": [
-                    ],
-                    "services": [
-                    ],
-                    "version": ""
-                },
-                "identity": "be84b195-158c-4c3c-93a3-a7d7f4324975",
-                "instances": [
-                ],
-                "view": {
-                    "height": 48,
-                    "isCollapsed": false,
-                    "positionX": 233,
-                    "positionY": -1119,
-                    "positionZ": 10.889999999999812,
-                    "width": 246
                 }
             }
         ]
