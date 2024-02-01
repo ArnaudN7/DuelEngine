@@ -83,6 +83,16 @@ def player_turn():
 def player_win():
     winner = "player1_win" if player1_turn else "player2_win"
     igs.output_set_impulsion(winner)
+
+def tie():
+    igs.output_set_impulsion("tie")
+
+def add_player_token(x : int, y : int):
+    nb = num_case(x, y)
+    game_memory[nb] = 1 if player1_turn else 2
+    player_color = "PLAYER1COLOR" if player1_turn else "PLAYER2COLOR"
+    parameters = ("ellipse", x, y, player_color, "black")
+    igs.service_call("DuelEngine", "addShapeInBoard", parameters, "")
 ### --- FUNCTIONS : WITH A IGS CALL
     
 ### FUNCTIONS : CALLBACK OF INPUTS
@@ -99,6 +109,8 @@ def game_action(x : int, y : int):
 def game_reset():
     global player1_turn
     global player1_started_last_game
+    global game_memory
+    game_memory = [0,0,0,0,0,0,0,0,0]
     player1_turn = not player1_started_last_game
     player1_started_last_game = not player1_started_last_game
     player_turn()
@@ -123,18 +135,30 @@ def win_condition():
     rl_diag = game_memory[2] != 0 and (game_memory[2] == game_memory[4] == game_memory[6])
     return first_line or second_line or third_line or first_column or second_column or third_column or lr_diag or rl_diag
 
+def tie_condition():
+    full_board = True
+    for i in game_memory:
+        if i == 0:
+            full_board = False
+            break
+    return full_board
+
 def action_result(x : int, y : int):
+    global game_memory
     win = False
     switch = False
-    nb = num_case(x, y)
-    if game_memory[nb] == 0:
-        switch = True
-        game_memory[nb] = 1 if player1_turn else 2
-        player_color = "PLAYER1COLOR" if player1_turn else "PLAYER2COLOR"
-        parameters = ("ellipse", x, y, player_color, "black")
-        igs.service_call("DuelEngine", "addShapeInBoard", parameters, "")
-    if win_condition():
-        win = True
+    if x != 0 and y != 0:
+        nb = num_case(x, y)
+        if game_memory[nb] == 0:
+            switch = True
+            add_player_token(x, y)
+        if win_condition():
+            switch = False
+            win = True
+        else:
+            if tie_condition():
+                switch = False
+                tie()
     return win, switch
 ### --- FUNCTIONS : CORE PROGRAM
 

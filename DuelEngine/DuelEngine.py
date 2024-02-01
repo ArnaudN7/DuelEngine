@@ -56,9 +56,9 @@ def service_callback(sender_agent_name, sender_agent_uuid, service_name, argumen
         case (sender_agent_name,"gameUnregister"):
             if sender_agent_name in games_available: # Game already added
                 del games_available[sender_agent_name]
-                if current_game == SELECT_GAME_STATE: # If we are selecting a game
+                if current_game == SELECT_GAME_STATE: # If we are selecting
                     select_game() # Refresh the select screen not to display the old game
-            if current_game == sender_agent_name:
+            if current_game == sender_agent_name or (current_game == REPLAY_GAME_STATE and last_game_played == sender_agent_name):
                 select_game()
                 send_log(GAME_UNREGISTERED_DURING_GAME)
         case (sender_agent_name,"addShape"):
@@ -111,14 +111,12 @@ def on_agent_event_callback(event, uuid, name, event_data, my_data): ### TBD ###
             del games_available[name]
             if current_game == SELECT_GAME_STATE: # If we are selecting a game
                 select_game() # Refresh the select screen not to display the old game
-        if current_game == name:
+        if current_game == name or (current_game == REPLAY_GAME_STATE and last_game_played == name):
             select_game()
             send_log(GAME_UNREGISTERED_DURING_GAME)
 
 def agent_init():
     ### AGENT DEFINITION
-    igs.input_create("forDev", igs.IMPULSION_T, None)
-    igs.observe_input("forDev", forDev, None)
     # Name
     igs.agent_set_name(NAME)
     # Inputs
@@ -172,14 +170,14 @@ def agent_init():
     igs.service_arg_add("addShapeInBoard", "color_fill", igs.STRING_T)
     igs.service_arg_add("addShapeInBoard", "stroke_color", igs.STRING_T)
     igs.service_init("addTextInBoard", service_callback, None)
-    igs.service_arg_add("addShapeInBoard", "text", igs.STRING_T)
-    igs.service_arg_add("addShapeInBoard", "x", igs.INTEGER_T)
-    igs.service_arg_add("addShapeInBoard", "y", igs.INTEGER_T)
-    igs.service_arg_add("addShapeInBoard", "color", igs.STRING_T)
+    igs.service_arg_add("addTextInBoard", "text", igs.STRING_T)
+    igs.service_arg_add("addTextInBoard", "x", igs.INTEGER_T)
+    igs.service_arg_add("addTextInBoard", "y", igs.INTEGER_T)
+    igs.service_arg_add("addTextInBoard", "color", igs.STRING_T)
     igs.service_init("addImageurlInBoard", service_callback, None)
-    igs.service_arg_add("addShapeInBoard", "url", igs.STRING_T)
-    igs.service_arg_add("addShapeInBoard", "x", igs.INTEGER_T)
-    igs.service_arg_add("addShapeInBoard", "y", igs.INTEGER_T)
+    igs.service_arg_add("addImageurlInBoard", "url", igs.STRING_T)
+    igs.service_arg_add("addImageurlInBoard", "x", igs.INTEGER_T)
+    igs.service_arg_add("addImageurlInBoard", "y", igs.INTEGER_T)
     # Receive
     igs.service_init("elementCreated", service_callback, None)
     igs.service_arg_add("elementCreated", "elementId", igs.INTEGER_T)
@@ -202,9 +200,6 @@ def init():
     anti_moving_guard = threading.Thread(target=elements_not_transposable)
     anti_moving_guard.start()
     update_whiteboard_infos()
-
-def forDev(iop_type, name, value_type, value, my_data): ### TEMP ###
-    play("ClickIt")
 
 ### GLOBAL VARIABLES 
 current_title = ""
@@ -359,6 +354,8 @@ def click(x : int, y : int):
         x_whiteboard, y_whiteboard = coord_to_whiteboard(x,y)
         if current_game != SELECT_GAME_STATE and current_game != REPLAY_GAME_STATE and current_game != COLOR_MENU_STATE:
             x_board, y_board = whiteboard_to_board(x_whiteboard, y_whiteboard)
+            if not xy_board_is_in_board(x_board, y_board):
+                x_board, y_board = 0, 0
             game_action(x_board, y_board)
         else:
             if current_game == SELECT_GAME_STATE:
@@ -459,8 +456,8 @@ def select_game():
             if game != SELECT_GAME_STATE and game != REPLAY_GAME_STATE and game != COLOR_MENU_STATE:
                 if nb <= MAX_GAMES:
                     current_game_selection.append(game)
-                    game_col = nb % col
-                    game_row = nb % row
+                    game_col = nb % (col+1)
+                    game_row = floor(nb/(row+1))+1
                     add_shape_in_board("rectangle", game_col, game_row, BACKGROUND_COLOR, "black")
                     add_imageurl_in_board(games_available[game]["game_image"], game_col, game_row)
                 else: # More than 9 games
