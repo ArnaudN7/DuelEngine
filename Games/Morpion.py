@@ -10,7 +10,12 @@
 from time import sleep
 import ingescape as igs
 
-NAME = "ClickIt"
+NAME = "Morpion"
+BOARD = "https://github.com/ArnaudN7/DuelEngine/blob/main/Games/Images/Morpion_board.png?raw=true"
+GAME_IMAGE = "https://github.com/ArnaudN7/DuelEngine/blob/main/Games/Images/Morpion_game_image.png?raw=true"
+CASE_LENGTH = 200
+BOARD_COL = 3
+BOARD_ROW = 3
 
 #inputs
 def input_callback(iop_type, name, value_type, value, my_data):
@@ -31,7 +36,7 @@ def agent_init():
     # Name
     igs.agent_set_name(NAME)
     igs.definition_set_version("1.0")
-    igs.definition_set_description("""A simple game that consists in clicking in the square""")
+    igs.definition_set_description("""The classic""")
     # Inputs
     igs.input_create("currentGame", igs.STRING_T, None)
     igs.input_create("x", igs.INTEGER_T, None)
@@ -65,13 +70,9 @@ def register():
     igs.service_call("DuelEngine", "gameRegister", arguments, "")
         
 ### GLOBAL VARIABLES
-BOARD = "https://github.com/ArnaudN7/DuelEngine/blob/main/Games/Images/ClickIt_board.png?raw=true"
-GAME_IMAGE = "https://github.com/ArnaudN7/DuelEngine/blob/main/Games/Images/ClickIt_game_image.png?raw=true"
-CASE_LENGTH = 200
-BOARD_COL = 3
-BOARD_ROW = 3
 player1_started_last_game = False
 player1_turn = True
+game_memory = [0,0,0,0,0,0,0,0,0]
 ### --- GLOBAL VARIABLES
 
 ### FUNCTIONS : WITH A IGS CALL
@@ -94,6 +95,7 @@ def game_action(x : int, y : int):
             switch_player_turn()
             player_turn()
 
+
 def game_reset():
     global player1_turn
     global player1_started_last_game
@@ -107,13 +109,31 @@ def switch_player_turn():
     global player1_turn
     player1_turn = not player1_turn
 
-def win_condition(x, y):
-    return x == 2 and y == 2
+def num_case(x : int, y : int):
+    return (x + BOARD_COL*(y-1)) - 1
+
+def win_condition():
+    first_line = game_memory[0] != 0 and (game_memory[0] == game_memory[1] == game_memory[2])
+    second_line = game_memory[3] != 0 and (game_memory[3] == game_memory[4] == game_memory[5])
+    third_line = game_memory[6] != 0 and (game_memory[6] == game_memory[7] == game_memory[8])
+    first_column = game_memory[0] != 0 and (game_memory[0] == game_memory[3] == game_memory[6])
+    second_column = game_memory[1] != 0 and (game_memory[1] == game_memory[4] == game_memory[7])
+    third_column = game_memory[2] != 0 and (game_memory[2] == game_memory[5] == game_memory[8])
+    lr_diag = game_memory[0] != 0 and (game_memory[0] == game_memory[4] == game_memory[8])
+    rl_diag = game_memory[2] != 0 and (game_memory[2] == game_memory[4] == game_memory[6])
+    return first_line or second_line or third_line or first_column or second_column or third_column or lr_diag or rl_diag
 
 def action_result(x : int, y : int):
     win = False
-    switch = True
-    if win_condition(x, y):
+    switch = False
+    nb = num_case(x, y)
+    if game_memory[nb] == 0:
+        switch = True
+        game_memory[nb] = 1 if player1_turn else 2
+        player_color = "PLAYER1COLOR" if player1_turn else "PLAYER2COLOR"
+        parameters = ("ellipse", x, y, player_color, "black")
+        igs.service_call("DuelEngine", "addShapeInBoard", parameters, "")
+    if win_condition():
         win = True
     return win, switch
 ### --- FUNCTIONS : CORE PROGRAM

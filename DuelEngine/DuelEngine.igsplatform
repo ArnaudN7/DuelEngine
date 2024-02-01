@@ -198,10 +198,6 @@
             {
                 "eventInstances": [
                     {
-                        "refId": 5,
-                        "startTime": 0
-                    },
-                    {
                         "refId": 2,
                         "startTime": 8500
                     },
@@ -210,12 +206,16 @@
                         "startTime": 8000
                     },
                     {
-                        "refId": 4,
-                        "startTime": 19320
+                        "refId": 5,
+                        "startTime": 0
                     },
                     {
                         "refId": 1,
                         "startTime": 8000
+                    },
+                    {
+                        "refId": 4,
+                        "startTime": 19320
                     }
                 ],
                 "name": "Timeline_1",
@@ -647,7 +647,7 @@
                     "isCollapsed": false,
                     "positionX": 448,
                     "positionY": -804,
-                    "positionZ": 10.939999999999811,
+                    "positionZ": 11.209999999999805,
                     "width": 252
                 }
             },
@@ -789,6 +789,10 @@
                                 {
                                     "name": "board_row",
                                     "type": "INTEGER"
+                                },
+                                {
+                                    "name": "height",
+                                    "type": "INTEGER"
                                 }
                             ],
                             "name": "gameRegister"
@@ -830,6 +834,67 @@
                                 }
                             ],
                             "name": "addShape"
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "shape",
+                                    "type": "STRING"
+                                },
+                                {
+                                    "name": "x",
+                                    "type": "INTEGER"
+                                },
+                                {
+                                    "name": "y",
+                                    "type": "INTEGER"
+                                },
+                                {
+                                    "name": "color_fill",
+                                    "type": "STRING"
+                                },
+                                {
+                                    "name": "stroke_color",
+                                    "type": "STRING"
+                                },
+                                {
+                                    "name": "text",
+                                    "type": "STRING"
+                                },
+                                {
+                                    "name": "color",
+                                    "type": "STRING"
+                                },
+                                {
+                                    "name": "url",
+                                    "type": "STRING"
+                                }
+                            ],
+                            "name": "addShapeInBoard"
+                        },
+                        {
+                            "arguments": [
+                                {
+                                    "name": "gameName",
+                                    "type": "STRING"
+                                }
+                            ],
+                            "name": "gameUregister"
+                        },
+                        {
+                            "arguments": [
+                            ],
+                            "name": "gameUnregister"
+                        },
+                        {
+                            "arguments": [
+                            ],
+                            "name": "addTextInBoard"
+                        },
+                        {
+                            "arguments": [
+                            ],
+                            "name": "addImageurlInBoard"
                         }
                     ],
                     "version": "1.0"
@@ -847,7 +912,7 @@
                     "isCollapsed": false,
                     "positionX": -14,
                     "positionY": -649,
-                    "positionZ": 10.809999999999814,
+                    "positionZ": 11.269999999999804,
                     "width": 272
                 }
             },
@@ -977,7 +1042,7 @@
                     "isCollapsed": false,
                     "positionX": 440,
                     "positionY": -598,
-                    "positionZ": 10.689999999999817,
+                    "positionZ": 11.259999999999804,
                     "width": 252
                 }
             },
@@ -1243,12 +1308,6 @@
                 "toOutput": "title_or_score"
             },
             {
-                "fromAgent": "c99c179c-0e6f-485b-b322-650649d4ee25",
-                "fromInput": "wildcard",
-                "toAgent": "DuelEngine",
-                "toOutput": "lastGameLog"
-            },
-            {
                 "fromAgent": "DuelEngine",
                 "fromInput": "mouse_x",
                 "toAgent": "MouseSensor",
@@ -1289,6 +1348,12 @@
                 "fromInput": "reset",
                 "toAgent": "DuelEngine",
                 "toOutput": "gameReset"
+            },
+            {
+                "fromAgent": "c99c179c-0e6f-485b-b322-650649d4ee25",
+                "fromInput": "wildcard",
+                "toAgent": "DuelEngine",
+                "toOutput": "currentGame"
             }
         ],
         "splits": [
@@ -1465,9 +1530,9 @@
                 "view": {
                     "height": 46,
                     "isCollapsed": false,
-                    "positionX": 129,
-                    "positionY": -271,
-                    "positionZ": 9.09999999999985,
+                    "positionX": -60,
+                    "positionY": -222,
+                    "positionZ": 10.99999999999981,
                     "width": 383
                 }
             },
@@ -1508,13 +1573,13 @@
                     "isCollapsed": false,
                     "positionX": -703,
                     "positionY": -428,
-                    "positionZ": 10.96999999999981,
+                    "positionZ": 11.289999999999804,
                     "width": 256
                 }
             },
             {
                 "data": {
-                    "selectedAgent": "DuelEngine"
+                    "selectedAgent": "ClickIt"
                 },
                 "definition": {
                     "description": "",
@@ -1539,7 +1604,7 @@
                     "isCollapsed": false,
                     "positionX": -856,
                     "positionY": -1185,
-                    "positionZ": 10.909999999999812,
+                    "positionZ": 11.279999999999804,
                     "width": 882
                 }
             },
@@ -1547,32 +1612,32 @@
                 "data": {
                     "arguments": [
                         {
-                            "type": "rectangle"
+                            "shape": "rectangle"
                         },
                         {
-                            "x": "0"
+                            "x": "2"
                         },
                         {
-                            "y": "0"
+                            "y": "2"
                         },
                         {
-                            "width": "100"
+                            "color_fill": "PLAYER1COLOR"
                         },
                         {
-                            "height": "100"
+                            "stroke_color": "PLAYER1COLOR"
                         },
                         {
-                            "fill": "blue"
+                            "text": ""
                         },
                         {
-                            "stroke": "blue"
+                            "color": ""
                         },
                         {
-                            "strokeWidth": "0"
+                            "url": ""
                         }
                     ],
-                    "selectedAgent": "Whiteboard",
-                    "selectedService": "addShape"
+                    "selectedAgent": "DuelEngine",
+                    "selectedService": "addShapeInBoard"
                 },
                 "definition": {
                     "description": "",
@@ -1602,7 +1667,7 @@
                     "isCollapsed": false,
                     "positionX": -839,
                     "positionY": -324,
-                    "positionZ": 10.95999999999981,
+                    "positionZ": 11.199999999999806,
                     "width": 265
                 }
             },
@@ -1626,6 +1691,9 @@
                         },
                         {
                             "board_row": "3"
+                        },
+                        {
+                            "height": "0"
                         }
                     ],
                     "selectedAgent": "DuelEngine",

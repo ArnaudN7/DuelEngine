@@ -23,6 +23,7 @@ TOUR_J1 = "Joueur 1 commence son tour."
 TOUR_J2 = "Joueur 2 commence son tour."
 VICTOIRE_J1 = "Joueur 1 a remporté la victoire !"
 VICTOIRE_J2 = "Joueur 2 a remporté la victoire !"
+EGALITE = "Match nul !"
 W_Y_BORDER_TOP = 128
 W_X_BORDER_RIGHT = 408
 GAME_UNREGISTERED_DURING_GAME = "ERREUR : Le moteur du jeu a cessé de répondre. Retour à la sélection..."
@@ -40,6 +41,8 @@ def input_callback(iop_type, name, value_type, value, my_data):
             player_win(0)
         case "player2_win":
             player_win(1)
+        case "tie":
+            tie()
         case _:
             None
 
@@ -124,12 +127,14 @@ def agent_init():
     igs.input_create("click", igs.IMPULSION_T, None)
     igs.input_create("player1_win", igs.IMPULSION_T, None)
     igs.input_create("player2_win", igs.IMPULSION_T, None)
+    igs.input_create("tie", igs.IMPULSION_T, None)
     igs.input_create("player1_turn", igs.IMPULSION_T, None)
     igs.input_create("player2_turn", igs.IMPULSION_T, None)
     # Inputs callback
     igs.observe_input("click", input_callback, None)
     igs.observe_input("player1_win", input_callback, None)
     igs.observe_input("player2_win", input_callback, None)
+    igs.observe_input("tie", input_callback, None)
     igs.observe_input("player1_turn", input_callback, None)
     igs.observe_input("player2_turn", input_callback, None)
     # Outputs
@@ -376,6 +381,10 @@ def player_win(player_id : int): # player_id : 0 or 1
     send_log(text_win)
     end_of_game()
 
+def tie():
+    update_current_state(EGALITE, BACKGROUND_COLOR, None)
+    send_log(EGALITE)
+    end_of_game()
 
 def player_turn(player_id : int): # player_id : 0 or 1
     game_log = ""
