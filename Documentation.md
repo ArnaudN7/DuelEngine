@@ -19,7 +19,12 @@
 Arnaud F.
 
 ### Sujet
-
+DuelEngine est un agent qui simplifie la création de jeux en duel (deux joueurs sur un ordinateur). Il gère les éléments suivants : score du duel, tour de jeu, historique de jeu, sélection de jeu, jouer un coup, création simplifiée d’éléments graphiques (amovibles ou non). Évidemment DuelEngine ne peut fonctionner seul, il a besoin de 2 agents au minimum : Whiteboard et MouseSensor.
+Whiteboard est l'agent fourni pour ce projet et dont il convient d'utliser un maximum de fonctionnalités.
+MouseSensor est un agent qu'il a fallu créer, son utilité est, comme son nom l'indique, donner les informations relatives à la souris de l'utilisateur à savoir : sa position en x, en y et l'action clic gauche.
+Pour le bien du projet, deux agents représentant des jeux ont été créés afin d'utiliser DuelEngine : ClickIt et Morpion.
+ClickIt est un jeu très simple où il faut cliquer dans la cible.
+Morpion est le jeu classique du morpion sans aucune règle additionnelle.
 
 ## Architecture du dépôt
 
