@@ -67,9 +67,22 @@ def init():
     agent_init()
 
 def register():
+    igs.mapping_add("currentGame", "DuelEngine", "currentGame")
+    igs.mapping_add("x", "DuelEngine", "x")
+    igs.mapping_add("y", "DuelEngine", "y")
+    igs.mapping_add("action", "DuelEngine", "gameAction")
+    igs.mapping_add("reset", "DuelEngine", "gameReset")
     arguments = (NAME, RULES, BOARD, GAME_IMAGE, CASE_LENGTH, CASE_LENGTH, BOARD_COL, BOARD_ROW)
     igs.service_call("DuelEngine", "gameRegister", arguments, "")
         
+def unregister():
+    igs.service_call("DuelEngine", "gameUnregister", (), "")
+    igs.mapping_remove_with_name("currentGame", "DuelEngine", "currentGame")
+    igs.mapping_remove_with_name("x", "DuelEngine", "x")
+    igs.mapping_remove_with_name("y", "DuelEngine", "y")
+    igs.mapping_remove_with_name("action", "DuelEngine", "gameAction")
+    igs.mapping_remove_with_name("reset", "DuelEngine", "gameReset")
+
 ### GLOBAL VARIABLES
 player1_started_last_game = False
 player1_turn = True
@@ -169,8 +182,8 @@ print(NAME)
 
 input()
 
-igs.service_call("DuelEngine", "gameUnregister", (), "")
+unregister()
 
-sleep(1) # Ensure call
+sleep(1) # Ensure unregister
 
 igs.stop()

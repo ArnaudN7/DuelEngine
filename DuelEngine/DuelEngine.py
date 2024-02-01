@@ -49,18 +49,9 @@ def input_callback(iop_type, name, value_type, value, my_data):
 def service_callback(sender_agent_name, sender_agent_uuid, service_name, arguments, token, my_data):
     match (sender_agent_name, service_name):
         case (sender_agent_name,"gameRegister"):
-            if not arguments[0] in games_available: # Game not already added
-                games_available[arguments[0]] = {"rules":arguments[1], "board":arguments[2], "game_image":arguments[3], "length":int(arguments[4]), "height":int(arguments[5]),"board_col":int(arguments[6]), "board_row":int(arguments[7])}
-                if current_game == SELECT_GAME_STATE: # If we are selecting a game
-                    select_game() # Refresh the select screen to display the new game
+            add_game(arguments)
         case (sender_agent_name,"gameUnregister"):
-            if sender_agent_name in games_available: # Game already added
-                del games_available[sender_agent_name]
-                if current_game == SELECT_GAME_STATE: # If we are selecting
-                    select_game() # Refresh the select screen not to display the old game
-            if current_game == sender_agent_name or (current_game == REPLAY_GAME_STATE and last_game_played == sender_agent_name):
-                select_game()
-                send_log(GAME_UNREGISTERED_DURING_GAME)
+            delete_game(sender_agent_name)
         case (sender_agent_name,"addShape"):
             if sender_agent_name == current_game:
                 color_fill = arguments[5]
@@ -107,13 +98,7 @@ def on_agent_event_callback(event, uuid, name, event_data, my_data): ### TBD ###
     if event == igs.AGENT_KNOWS_US and name == "Whiteboard":
         output_current_state() #updateNewWhiteboard
     if event == igs.AGENT_EXITED:
-        if name in games_available: # Game already added
-            del games_available[name]
-            if current_game == SELECT_GAME_STATE: # If we are selecting a game
-                select_game() # Refresh the select screen not to display the old game
-        if current_game == name or (current_game == REPLAY_GAME_STATE and last_game_played == name):
-            select_game()
-            send_log(GAME_UNREGISTERED_DURING_GAME)
+        delete_game(name)
 
 def agent_init():
     ### AGENT DEFINITION
@@ -221,6 +206,32 @@ whiteboard_fixed_elements = []  # {id, type, infos} infos for a shape : {shape, 
 ### --- GLOBAL VARIABLES
 
 ### FUNCTIONS : WITH A IGS CALL
+
+def add_game(infos : str):
+    if not infos[0] in games_available: # Game not already added
+        games_available[infos[0]] = {"rules":infos[1], "board":infos[2], "game_image":infos[3], "length":int(infos[4]), "height":int(infos[5]),"board_col":int(infos[6]), "board_row":int(infos[7])}
+        igs.mapping_add("player1_win", infos[0], "player1_win")
+        igs.mapping_add("player2_win", infos[0], "player2_win")
+        igs.mapping_add("player1_turn", infos[0], "player1_turn")
+        igs.mapping_add("player2_turn", infos[0], "player2_turn")
+        igs.mapping_add("tie", infos[0], "tie")
+        if current_game == SELECT_GAME_STATE: # If we are selecting a game
+            select_game() # Refresh the select screen to display the new game
+
+def delete_game(game : str):
+    if game in games_available: # If it is a game we added
+        del games_available[game]
+        igs.mapping_remove_with_name("player1_win", game, "player1_win")
+        igs.mapping_remove_with_name("player2_win", game, "player2_win")
+        igs.mapping_remove_with_name("player1_turn", game, "player1_turn")
+        igs.mapping_remove_with_name("player2_turn", game, "player2_turn")
+        igs.mapping_remove_with_name("tie", game, "tie")
+        if current_game == SELECT_GAME_STATE: # If we are selecting
+            select_game() # Refresh the select screen not to display the old game
+        else:
+            if current_game == game or (current_game == REPLAY_GAME_STATE and last_game_played == game):
+                select_game()
+                send_log(GAME_UNREGISTERED_DURING_GAME)
 
 def elements_not_transposable(): ### TBD ### Mentionner ça dans le rapport + essai anti deletion
     global program_running

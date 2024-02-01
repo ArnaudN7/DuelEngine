@@ -29,6 +29,16 @@
 ## Fonctionnalités
 
 ## Ingescape
+### Altération du mapping
+#### Ajout
+OK
+#### Suppression
+Tout essayé mais aucune n'a marché :
+- igs.clear_mappings
+- igs.clear_mappings_with_agent
+- igs.clear_mappings_for_input 
+- igs.mapping_remove_with_id
+- igs.mapping_remove_with_name
 
 ## Tests
 

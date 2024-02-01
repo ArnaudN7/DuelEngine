@@ -1,24 +1,19 @@
-#!/usr/bin/env -P /usr/bin:/usr/local/bin python3 -B
-# coding: utf-8
-
-#
-#  main.py
-#  ClickIt version 1.0
-#  Created by Ingenuity i/o on 2024/01/30
-#
-
 from time import sleep
 import ingescape as igs
 
-NAME = "ClickIt"
-RULES = "But du jeu : Cliquer dans le carré ! Cliquer à côté de ce dernier vous fera passer votre tour."
-BOARD = "https://github.com/ArnaudN7/DuelEngine/blob/main/Games/Images/ClickIt_board.png?raw=true"
-GAME_IMAGE = "https://github.com/ArnaudN7/DuelEngine/blob/main/Games/Images/ClickIt_game_image.png?raw=true"
-CASE_LENGTH = 200
-BOARD_COL = 3
-BOARD_ROW = 3
+# ONLY MODIFY ELEMENTS THAT ARE IDENTIFIED WITH #MODIFYIT!
+# You can CTRL+F #MODIFYIT! to make it easier
 
-#inputs
+NAME = "YOURGAMENAME" #MODIFYIT!
+RULES = "YOURRULES" #MODIFYIT!
+BOARD = "A png url of your board in such dimensions as : <<CASE_LENGTH*BOARD_COL>>x<<CASE_HEIGHT*BOARD_ROW>>" #MODIFYIT!
+GAME_IMAGE = "A png url of your game in 300x300" #MODIFYIT!
+CASE_LENGTH = 200 #MODIFYIT!
+CASE_HEIGHT = 200 #MODIFYIT!
+BOARD_COL = 3 #MODIFYIT!
+BOARD_ROW = 3 #MODIFYIT!
+
+# Input callback
 def input_callback(iop_type, name, value_type, value, my_data):
     if name == "action":
         if igs.input_string("currentGame") == NAME:
@@ -26,7 +21,6 @@ def input_callback(iop_type, name, value_type, value, my_data):
     if name == "reset":
         if igs.input_string("currentGame") == NAME:
             game_reset()
-    # add code here if needed
 
 def on_agent_event_callback(event, uuid, name, event_data, my_data):
    if event == igs.AGENT_KNOWS_US and name == "DuelEngine":
@@ -37,7 +31,7 @@ def agent_init():
     # Name
     igs.agent_set_name(NAME)
     igs.definition_set_version("1.0")
-    igs.definition_set_description("""A simple game that consists in clicking in the square""")
+    igs.definition_set_description("""A short description of your game""") #MODIFYIT!
     # Inputs
     igs.input_create("currentGame", igs.STRING_T, None)
     igs.input_create("x", igs.INTEGER_T, None)
@@ -72,23 +66,25 @@ def register():
     igs.mapping_add("y", "DuelEngine", "y")
     igs.mapping_add("action", "DuelEngine", "gameAction")
     igs.mapping_add("reset", "DuelEngine", "gameReset")
-    arguments = (NAME, RULES, BOARD, GAME_IMAGE, CASE_LENGTH, CASE_LENGTH, BOARD_COL, BOARD_ROW)
+    arguments = (NAME, RULES, BOARD, GAME_IMAGE, CASE_LENGTH, CASE_HEIGHT, BOARD_COL, BOARD_ROW)
     igs.service_call("DuelEngine", "gameRegister", arguments, "")
         
 def unregister():
     igs.service_call("DuelEngine", "gameUnregister", (), "")
-    igs.mapping_remove("currentGame", "DuelEngine", "currentGame")
-    igs.mapping_remove("x", "DuelEngine", "x")
-    igs.mapping_remove("y", "DuelEngine", "y")
-    igs.mapping_remove("action", "DuelEngine", "gameAction")
-    igs.mapping_remove("reset", "DuelEngine", "gameReset")
+    igs.mapping_remove_with_name("currentGame", "DuelEngine", "currentGame")
+    igs.mapping_remove_with_name("x", "DuelEngine", "x")
+    igs.mapping_remove_with_name("y", "DuelEngine", "y")
+    igs.mapping_remove_with_name("action", "DuelEngine", "gameAction")
+    igs.mapping_remove_with_name("reset", "DuelEngine", "gameReset")
 
 ### GLOBAL VARIABLES
 player1_started_last_game = False
 player1_turn = True
+game_memory = [] #MODIFYIT!
 ### --- GLOBAL VARIABLES
 
 ### FUNCTIONS : WITH A IGS CALL
+
 def player_turn():
     next_turn = "player1_turn" if player1_turn else "player2_turn"
     igs.output_set_impulsion(next_turn)
@@ -96,9 +92,14 @@ def player_turn():
 def player_win():
     winner = "player1_win" if player1_turn else "player2_win"
     igs.output_set_impulsion(winner)
+
+def tie():
+    igs.output_set_impulsion("tie")
+    
 ### --- FUNCTIONS : WITH A IGS CALL
     
 ### FUNCTIONS : CALLBACK OF INPUTS
+    
 def game_action(x : int, y : int):
     win, switch = action_result(x, y)
     if win:
@@ -108,28 +109,45 @@ def game_action(x : int, y : int):
             switch_player_turn()
             player_turn()
 
-def game_reset():
+def game_reset(): #MODIFYIT!
     global player1_turn
     global player1_started_last_game
+    ###
+    global game_memory
+    game_memory = []
+    ###
     player1_turn = not player1_started_last_game
     player1_started_last_game = not player1_started_last_game
     player_turn()
+
 ### --- FUNCTIONS : CALLBACK OF INPUTS
 
 ### FUNCTIONS : CORE PROGRAM
+    
 def switch_player_turn():
     global player1_turn
     player1_turn = not player1_turn
 
-def win_condition(x, y):
-    return x == 2 and y == 2
+def win_condition(): #MODIFYIT!
+    return True
 
-def action_result(x : int, y : int):
+def tie_condition(): #MODIFYIT!
+    return True 
+
+def action_result(x : int, y : int): #MODIFYIT!
     win = False
-    switch = True
-    if win_condition(x, y):
-        win = True
+    switch = False
+    if x != 0 and y != 0: # If in board
+        # Any code here if actions may occur such as adding graphical stuff
+        if win_condition():
+            switch = False
+            win = True
+        else:
+            if tie_condition():
+                switch = False
+                tie()
     return win, switch
+
 ### --- FUNCTIONS : CORE PROGRAM
 
 init()
@@ -140,6 +158,6 @@ input()
 
 unregister()
 
-sleep(1) # Ensure call
+sleep(1) # Ensure unregister
 
 igs.stop()
