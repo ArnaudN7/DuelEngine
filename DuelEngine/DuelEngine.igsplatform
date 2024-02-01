@@ -198,14 +198,6 @@
             {
                 "eventInstances": [
                     {
-                        "refId": 4,
-                        "startTime": 19320
-                    },
-                    {
-                        "refId": 5,
-                        "startTime": 0
-                    },
-                    {
                         "refId": 2,
                         "startTime": 8500
                     },
@@ -216,6 +208,14 @@
                     {
                         "refId": 3,
                         "startTime": 8000
+                    },
+                    {
+                        "refId": 4,
+                        "startTime": 19320
+                    },
+                    {
+                        "refId": 5,
+                        "startTime": 0
                     }
                 ],
                 "name": "Timeline_1",
@@ -793,6 +793,10 @@
                                 {
                                     "name": "height",
                                     "type": "INTEGER"
+                                },
+                                {
+                                    "name": "rules",
+                                    "type": "STRING"
                                 }
                             ],
                             "name": "gameRegister"
@@ -1150,7 +1154,7 @@
                     "height": 40,
                     "isCollapsed": false,
                     "positionX": 430,
-                    "positionY": -300,
+                    "positionY": -335,
                     "positionZ": 11.519999999999799,
                     "width": 252
                 }
@@ -1284,18 +1288,6 @@
                 "toOutput": "gameReset"
             },
             {
-                "fromAgent": "5bd557ab-c9b2-4da5-a1d9-6efb409d1893",
-                "fromInput": "wildcard",
-                "toAgent": "DuelEngine",
-                "toOutput": "y"
-            },
-            {
-                "fromAgent": "c8b4110a-bda0-4357-b534-fc2371e5656b",
-                "fromInput": "wildcard",
-                "toAgent": "DuelEngine",
-                "toOutput": "x"
-            },
-            {
                 "fromAgent": "DuelEngine",
                 "fromInput": "player1_win",
                 "toAgent": "Morpion",
@@ -1331,76 +1323,6 @@
         "splitters": [
         ],
         "tools": [
-            {
-                "data": {
-                },
-                "definition": {
-                    "description": "",
-                    "family": "7fc274c8-b06e-429b-9d09-d14878381016",
-                    "inputs": [
-                        {
-                            "description": "",
-                            "name": "wildcard",
-                            "type": "WILDCARD_SINGLE_MAPPING"
-                        }
-                    ],
-                    "isDynamic": false,
-                    "name": "",
-                    "outputs": [
-                    ],
-                    "parameters": [
-                    ],
-                    "services": [
-                    ],
-                    "version": ""
-                },
-                "identity": "5bd557ab-c9b2-4da5-a1d9-6efb409d1893",
-                "instances": [
-                ],
-                "view": {
-                    "height": 46,
-                    "isCollapsed": false,
-                    "positionX": 91,
-                    "positionY": -147,
-                    "positionZ": 11.4699999999998,
-                    "width": 180
-                }
-            },
-            {
-                "data": {
-                },
-                "definition": {
-                    "description": "",
-                    "family": "7fc274c8-b06e-429b-9d09-d14878381016",
-                    "inputs": [
-                        {
-                            "description": "",
-                            "name": "wildcard",
-                            "type": "WILDCARD_SINGLE_MAPPING"
-                        }
-                    ],
-                    "isDynamic": false,
-                    "name": "",
-                    "outputs": [
-                    ],
-                    "parameters": [
-                    ],
-                    "services": [
-                    ],
-                    "version": ""
-                },
-                "identity": "c8b4110a-bda0-4357-b534-fc2371e5656b",
-                "instances": [
-                ],
-                "view": {
-                    "height": 46,
-                    "isCollapsed": false,
-                    "positionX": 93,
-                    "positionY": -221,
-                    "positionZ": 11.4799999999998,
-                    "width": 180
-                }
-            }
         ]
     },
     "snippets": [

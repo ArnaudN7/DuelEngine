@@ -11,6 +11,12 @@ from time import sleep
 import ingescape as igs
 
 NAME = "ClickIt"
+RULES = "But du jeu : Cliquer dans le carré ! Cliquer à côté de ce dernier vous fera passer votre tour."
+BOARD = "https://github.com/ArnaudN7/DuelEngine/blob/main/Games/Images/ClickIt_board.png?raw=true"
+GAME_IMAGE = "https://github.com/ArnaudN7/DuelEngine/blob/main/Games/Images/ClickIt_game_image.png?raw=true"
+CASE_LENGTH = 200
+BOARD_COL = 3
+BOARD_ROW = 3
 
 #inputs
 def input_callback(iop_type, name, value_type, value, my_data):
@@ -61,15 +67,10 @@ def init():
     agent_init()
 
 def register():
-    arguments = (NAME, BOARD, GAME_IMAGE, CASE_LENGTH, CASE_LENGTH, BOARD_COL, BOARD_ROW)
+    arguments = (NAME, RULES, BOARD, GAME_IMAGE, CASE_LENGTH, CASE_LENGTH, BOARD_COL, BOARD_ROW)
     igs.service_call("DuelEngine", "gameRegister", arguments, "")
         
 ### GLOBAL VARIABLES
-BOARD = "https://github.com/ArnaudN7/DuelEngine/blob/main/Games/Images/ClickIt_board.png?raw=true"
-GAME_IMAGE = "https://github.com/ArnaudN7/DuelEngine/blob/main/Games/Images/ClickIt_game_image.png?raw=true"
-CASE_LENGTH = 200
-BOARD_COL = 3
-BOARD_ROW = 3
 player1_started_last_game = False
 player1_turn = True
 ### --- GLOBAL VARIABLES

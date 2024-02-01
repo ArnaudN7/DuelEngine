@@ -11,6 +11,7 @@ from time import sleep
 import ingescape as igs
 
 NAME = "Morpion"
+RULES = "But du jeu : Aligner 3 pions de sa couleur ! Placer un pion à chaque tour."
 BOARD = "https://github.com/ArnaudN7/DuelEngine/blob/main/Games/Images/Morpion_board.png?raw=true"
 GAME_IMAGE = "https://github.com/ArnaudN7/DuelEngine/blob/main/Games/Images/Morpion_game_image.png?raw=true"
 CASE_LENGTH = 200
@@ -66,7 +67,7 @@ def init():
     agent_init()
 
 def register():
-    arguments = (NAME, BOARD, GAME_IMAGE, CASE_LENGTH, CASE_LENGTH, BOARD_COL, BOARD_ROW)
+    arguments = (NAME, RULES, BOARD, GAME_IMAGE, CASE_LENGTH, CASE_LENGTH, BOARD_COL, BOARD_ROW)
     igs.service_call("DuelEngine", "gameRegister", arguments, "")
         
 ### GLOBAL VARIABLES

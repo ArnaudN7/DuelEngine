@@ -50,7 +50,7 @@ def service_callback(sender_agent_name, sender_agent_uuid, service_name, argumen
     match (sender_agent_name, service_name):
         case (sender_agent_name,"gameRegister"):
             if not arguments[0] in games_available: # Game not already added
-                games_available[arguments[0]] = {"board":arguments[1], "game_image":arguments[2], "length":int(arguments[3]), "height":int(arguments[4]),"board_col":int(arguments[5]), "board_row":int(arguments[6])}
+                games_available[arguments[0]] = {"rules":arguments[1], "board":arguments[2], "game_image":arguments[3], "length":int(arguments[4]), "height":int(arguments[5]),"board_col":int(arguments[6]), "board_row":int(arguments[7])}
                 if current_game == SELECT_GAME_STATE: # If we are selecting a game
                     select_game() # Refresh the select screen to display the new game
         case (sender_agent_name,"gameUnregister"):
@@ -148,6 +148,7 @@ def agent_init():
     # Create
     igs.service_init("gameRegister", service_callback, None)
     igs.service_arg_add("gameRegister", "gameName", igs.STRING_T)
+    igs.service_arg_add("gameRegister", "rules", igs.STRING_T)
     igs.service_arg_add("gameRegister", "game_image", igs.STRING_T)
     igs.service_arg_add("gameRegister", "board", igs.STRING_T)
     igs.service_arg_add("gameRegister", "length", igs.INTEGER_T)
@@ -207,7 +208,7 @@ current_player_color = ""
 current_game = ""
 last_game_played = ""
 program_running = True
-games_available = {} # {"Morpion":{"game_image":"screen.url","board":"board.url", "length":20, "height":20, board_col":3, "board_row":3},...}
+games_available = {} # {"Morpion":{"rules":"rules","game_image":"screen.url","board":"board.url", "length":20, "height":20, board_col":3, "board_row":3},...}
 current_game_selection = [] # Updated in select_game()
 current_game_score = [0,0] # [player1score,player2score]
 players_color = [COLORS_AVAILABLES[0],COLORS_AVAILABLES[1]] # [player1color,player2color]
@@ -231,9 +232,16 @@ def elements_not_transposable(): ### TBD ### Mentionner ça dans le rapport + es
 
 def output_current_state():
     sleep(2) # Waiting for the Whiteboard to refresh his screen (not my fault)
-    igs.output_set_string("title_or_score", current_title)
-    igs.output_set_string("currentPlayerColor", current_player_color)
-    igs.output_set_string("currentGame", current_game)
+    if current_game == SELECT_GAME_STATE:
+        select_game()
+    else:
+        if current_game == REPLAY_GAME_STATE:
+            replay_game()
+        else:
+            if current_game == COLOR_MENU_STATE:
+                color_menu()
+            else:
+                play(current_game)
 
 def update_current_state(title : str, player_color : str, game : str):
     if title != None:
@@ -540,6 +548,7 @@ def play(game : str):
     clear_whiteboard()
     update_current_state(get_game_score(), None, game)
     send_log("Début d'une partie de : " + current_game)
+    send_log(games_available[current_game]["rules"])
     reset_game()
     add_element("imageurl",{"url":games_available[current_game]["board"],"x":current_board_location[0],"y":current_board_location[1]})
 
