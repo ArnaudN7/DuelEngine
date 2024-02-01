@@ -26,4 +26,4 @@ En effet, 5 scripts PowerShell sont présents et suivant la nommenclature *launc
 Les agents peuvent être exécutés dans n'importe quel ordre, en revanche :
 - Le programme a besoin de capter la souris, MouseSensor est indispensable
 - Toute communication passe par DuelEngine, la présence de ce dernier est essentielle pour que les jeux puissent fonctionner
-- Il est fortement conseillé de mettre le Whiteboard en plein écran et de lancer DuelEngine après. En effet, DuelEngine affiche des images en utilisant le service d'affichage d'image via url de l'agent Whiteboard, malheureusement, Whiteboard ne permet pas de les redimensionner. Par conséquent, l'affichage peut se superposer sur un dimensionnement de la fenêtre du Whiteboard trop petite. 
+- Il est fortement conseillé de mettre le Whiteboard en plein écran et de lancer DuelEngine après. En effet, DuelEngine affiche des images en utilisant le service d'affichage d'image via url de l'agent Whiteboard, malheureusement, Whiteboard ne permet pas de les redimensionner. Par conséquent, l'affichage peut se superposer si le dimensionnement de la fenêtre du Whiteboard est trop petit. 
