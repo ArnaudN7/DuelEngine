@@ -5,14 +5,12 @@
 2. [Architecture du dépôt](#architecture-du-dépôt)
 3. [Choix](#choix)
 4. [Architecture Ingescape circle](#architecture-ingescape-circle)
-5. [Originale](#originale)
-6. [Finale](#finale)
-7. [Fonctionnalités](#fonctionnalités)
-8. [Ingescape](#ingescape)
-9. [Tests](#tests)
-10. [Limites](#limites)
-11. [Évolution](#évolution)
-12. [Bilan](#bilan)  
+5. [Fonctionnalités](#fonctionnalités)
+6. [Ingescape](#ingescape)
+7. [Tests](#tests)
+8. [Limites](#limites)
+9. [Évolution](#évolution)
+10. [Bilan](#bilan)  
 
 ## Projet
 ### Composition du groupe
