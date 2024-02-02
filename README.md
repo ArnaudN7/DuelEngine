@@ -24,6 +24,7 @@ En effet, 5 scripts PowerShell sont présents et suivant la nommenclature *launc
 - L'agent MouseSensor : l'agent chargé de transmettre les actions de la souris
 - L'agent ClickIt : un premier jeu exemple
 - L'agent Morpion : un deuxième jeu exemple  
+  
 Voir la suite dans [Exécution du programme](#exécution-du-programme)
 
 ## Exécution (Ubuntun, MacOS, ...)
@@ -32,7 +33,8 @@ Aucun script n'est présent pour un système d'exploitation autre que Windows. P
 - Pour l'agent Whiteboard (l'agent fourni pour ce projet) : "./Whiteboard/Whiteboard.exe" avec les options suivantes "--device "Loopback Pseudo-Interface 1"" et "--port 5670"
 - Pour l'agent MouseSensor (l'agent chargé de transmettre les actions de la souris) : "./DuelEngine/MouseSensor.py"
 - Pour l'agent ClickIt (un premier jeu exemple) : "./Games/ClickIt.py"
-- Pour l'agent Morpion (un deuxième jeu exemple) : "./Games/Morpion.py"  
+- Pour l'agent Morpion (un deuxième jeu exemple) : "./Games/Morpion.py"
+  
 Voir la suite dans [Exécution du programme](#exécution-du-programme)
 
 ## Exécution du programme
