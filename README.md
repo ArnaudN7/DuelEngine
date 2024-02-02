@@ -27,7 +27,7 @@ En effet, 5 scripts PowerShell sont présents et suivant la nommenclature *launc
   
 Voir la suite dans [Exécution du programme](#exécution-du-programme)
 
-## Exécution (Ubuntun, MacOS, ...)
+## Exécution (Ubuntu, MacOS, ...)
 Aucun script n'est présent pour un système d'exploitation autre que Windows. Par conséquent, il relève de votre responsabilité d'exécuter les programmes suivants :
 - Pour l'agent DuelEngine (le programme principal) : "./DuelEngine/DuelEngine.py"
 - Pour l'agent Whiteboard (l'agent fourni pour ce projet) : "./Whiteboard/Whiteboard.exe" avec les options suivantes "--device "Loopback Pseudo-Interface 1"" et "--port 5670"
