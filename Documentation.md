@@ -149,6 +149,7 @@ Selon la même logique que l'ajout de liens nécessaires pour le fonctionnement 
 - igs.mapping_remove_with_name
 
 ## Tests
+### TBD
 
 ## Limites
 ### Design graphique
@@ -160,8 +161,11 @@ L'agent Whiteboard ne pouvant être modifié, nous ne pouvons pas instaurer un a
 
 ## Évolution
 ### Plusieurs Whiteboard
-Un seul interactif, d'autres affichage
+Nous pourrions facilement imaginer plusieurs Whiteboard pouvant afficher la même chose. Comme décrit ci-dessus il serait possible de sauvegarder les éléments affichés et les créer sur les Whiteboard arrivant en cours de jeu. Cela requiert toujours une évolution du Whiteboard qui consisterait à informer DuelEngine de son arrivée. Évidemment, un seul de tout ces Whiteboard serait déterminé comme principal et serait la référence des interactions avec l'utilisateur.
 ### Amélioration du design
+Plusieurs éléments d'interactions comme les boutons ou encore les textes pourraient être transformés en image. Cela permettrait de designer plus profondement ces éléments d'interaction pour les rendre plus attrayant et visuellement agréable.
 ### Recalibrage
+Un bouton permettant de recalibrer l'affichage par rapport au Whiteboard pourrait être créé. En effet, si l'on redimensionne le Whiteboard l'affichage étant basé sur des coordonnées fixes, rien ne bouge. Un bouton permanent sur tous les écrans pourraient permettre de ré-afficher l'entièreté des éléments selon les nouvelles dimensions du Whiteboard. Cette partie nécessite également de mémoriser tous les éléments graphiques présents à ce moment-là dans le cas d'un appui pendant une partie d'un jeu.
 
 ## Bilan
+Ce projet fut pour moi très intéressant mais surtout amusant. Je vous remercie d'avoir accepté le fait que mon projet puisse se dérouler en solo. J'ai pu pousser l'expérience aussi loin que je le souhaitais avec Ingescape Circle et je suis très satisfait car mes attentes ont été comblées. J'espère avoir reflété dans mon travail et dans mon utilisation d'Ingescape l'intérêt et l'admiration que j'éprouve envers cet outil.
