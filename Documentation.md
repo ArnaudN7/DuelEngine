@@ -71,11 +71,8 @@ Plusieurs choix techniques ont été fait pour le développement de ce projet, l
 - L'agent Whiteboard étant non modifiable et pas totalement adapté au besoin de ce projet, il a été décidé que DuelEngine interagirait avec un unique Whiteboard à la fois, considérant donc qu'un seul Whiteboard ne peut se connecter et qu'une déconnexion de l'agent Whiteboard signifie qu'aucun autre Whiteboard n'est présent.
 - Le développement a été priorisé par rapport à l'esthétique. En effet, l'aspect esthétique est très simpliste, que ce soit dans les jeux ou en général. En revanche, il est facilement améliorable et ce sera un aspect abordé dans une autre partie de cette documentation.
 
-## Architecture Ingescape circle
-
-### Originale
-
-### Finale
+## Architecture Ingescape Circle
+![Image architecture Ingescape Circle](/Images/Ingescape_Circle_architecture.png)
 
 ## Fonctionnalités
 Cette partie traite d'éléments conceptuel pouvant être retrouvé à plusieurs endroits dans le code. Il ne convient pas de décrire le code mais bien de présenter les concepts. Le code est commenté, partitionné mais il reste dense et complexe aux premiers abords, là est le principal objectif de cette partie, présenter les fonctionnalités apportées par DuelEngine pour simplifier la compréhension du code.
