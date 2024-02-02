@@ -169,8 +169,6 @@ def agent_init():
     igs.service_arg_add("elementCreated", "elementId", igs.INTEGER_T)
     igs.service_init("elements", service_callback, None)
     igs.service_arg_add("elements", "jsonArray", igs.STRING_T)
-    igs.service_init("actionResult", service_callback, None)
-    igs.service_arg_add("succeeded", "bool", igs.BOOL_T)
     # Observe agent
     igs.observe_agent_events(on_agent_event_callback, None)
     # Connection
@@ -233,7 +231,7 @@ def delete_game(game : str):
                 select_game()
                 send_log(GAME_UNREGISTERED_DURING_GAME)
 
-def elements_not_transposable(): ### TBD ### Mentionner ça dans le rapport + essai anti deletion
+def elements_not_transposable():
     global program_running
     while(program_running):
         for element in whiteboard_fixed_elements:
