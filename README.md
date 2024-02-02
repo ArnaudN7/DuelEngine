@@ -23,7 +23,7 @@ En effet, 5 scripts PowerShell sont présents et suivant la nommenclature *launc
 - L'agent Whiteboard : l'agent fourni pour ce projet
 - L'agent MouseSensor : l'agent chargé de transmettre les actions de la souris
 - L'agent ClickIt : un premier jeu exemple
-- L'agent Morpion : un deuxième jeu exemple
+- L'agent Morpion : un deuxième jeu exemple  
 Voir la suite dans [Exécution du programme](#exécution-du-programme)
 
 ## Exécution (Ubuntun, MacOS, ...)
