@@ -198,20 +198,20 @@
             {
                 "eventInstances": [
                     {
-                        "refId": 4,
-                        "startTime": 19320
-                    },
-                    {
-                        "refId": 2,
-                        "startTime": 8500
+                        "refId": 1,
+                        "startTime": 8000
                     },
                     {
                         "refId": 5,
                         "startTime": 0
                     },
                     {
-                        "refId": 1,
-                        "startTime": 8000
+                        "refId": 4,
+                        "startTime": 19320
+                    },
+                    {
+                        "refId": 2,
+                        "startTime": 8500
                     },
                     {
                         "refId": 3,
@@ -647,7 +647,7 @@
                     "isCollapsed": false,
                     "positionX": 394,
                     "positionY": -811,
-                    "positionZ": 11.689999999999795,
+                    "positionZ": 11.719999999999795,
                     "width": 252
                 }
             },
@@ -935,7 +935,7 @@
                     "isCollapsed": false,
                     "positionX": -14,
                     "positionY": -649,
-                    "positionZ": 11.669999999999796,
+                    "positionZ": 11.729999999999794,
                     "width": 272
                 }
             },
@@ -1070,7 +1070,7 @@
                     "isCollapsed": false,
                     "positionX": 397,
                     "positionY": -601,
-                    "positionZ": 11.649999999999796,
+                    "positionZ": 11.699999999999795,
                     "width": 252
                 }
             },
