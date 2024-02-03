@@ -26,7 +26,7 @@ ClickIt est un jeu très simple où il faut cliquer dans la cible.
 Morpion est le jeu classique du morpion sans aucune règle additionnelle.  
 
 ## Architecture du dépôt
-### Dépôts
+### Dépôt
 Dans ce dépôt de projet, vous pourrez retrouver les dossiers et fichiers suivants :
 - **DuelEngine** : Dossier contenant les fichiers des agents principaux (DuelEngine et MouseSensor) mais aussi le fichier igsplatform du projet.
 - **Games** : Dossier contenant les fichiers des agents étant des jeux.
