@@ -149,7 +149,8 @@ Selon la même logique que l'ajout de liens nécessaires pour le fonctionnement 
 - igs.mapping_remove_with_name
 
 ## Tests
-### TBD
+Malheureusement, je n'ai pas pu utiliser l'outil de test pour lancer les scripts de test de mes agents. En effet, à l'exécution de ce dernier, soit il ne détectait pas les agents, soit il les détectait mais des tel que "mouse move x y" (plus que nécessaires dans le cas de ce projet) rendait mon pc inactif pendant quelques secondes avant de bloquer à cette étape dans le script.  
+Des tests ont été écrit dans le dossier **VandV**, en revanche, je n'ai pas pu les essayer. DuelEngine n'a pas beaucoup de test sur lui-même car les actions qu'il déclenche sont principalement internes et requiert beaucoup d'actions précises pour déclencher des outputs ou des appels de services.
 
 ## Limites
 ### Design graphique
