@@ -25,6 +25,8 @@ En effet, 5 scripts PowerShell sont présents et suivant la nommenclature *launc
 - L'agent ClickIt : un premier jeu exemple
 - L'agent Morpion : un deuxième jeu exemple  
   
+Pour les exécuter il suffit d'effectuer un clic droit dessus et de sélectionner "Exécuter avec PowerShell"
+  
 Voir la suite dans [Exécution du programme](#exécution-du-programme)
 
 ## Exécution (Ubuntun, MacOS, ...)

@@ -1,0 +1,119 @@
+"ClickIt" {
+// Enregistrement du jeu
+start peer ClickIt
+assert gameRegister from ClickIt
+
+// Clic gagnant
+ClickIt.currentGame = "ClickIt"
+ClickIt.x = 2
+ClickIt.y = 2
+ClickIt.action = 1
+assert ClickIt.player1_win == 1 or ClickIt.player2_win == 1
+
+ClickIt.action = 0
+
+// Clic perdant
+ClickIt.x = 1
+ClickIt.y = 1
+ClickIt.action = 1
+assert ClickIt.player1_turn == 1 or ClickIt.player2_turn == 1
+
+// Désinscription du jeu
+stop ClickIt
+assert gameUnregister from ClickIt
+}
+
+"MouseSensor" {
+// Clic souris
+mouse press 441 652
+assert MouseSensor.click == 1
+assert MouseSensor.mouse_x == 441
+assert MouseSensor.mouse_y == 652
+}
+
+"DuelEngine {
+// Appel de services addShape non vérifiable car il faut être le jeu
+// Même chose pour addShapeInBoard, addTextInBoard ...
+
+// Demande des éléments existants lors de l'ajout d'un nouvel élément (dans le but de l'ajouter aux éléments immobiles)
+Whiteboard.addText("Texte", 1, 1, "black)
+assert getElements from DuelEngine
+
+// Inputs et Outputs assez difficilement testable, un clic n'a d'incidence que lorsqu'il a lieu sur le Whiteboard, aux bonnes coordonnées...
+}
+
+"Morpion" {
+// Enregistrement du jeu
+start peer Morpion
+assert gameRegister from Morpion
+
+// Enchaînement gagnant
+Morpion.currentGame = "Morpion"
+Morpion.x = 2
+Morpion.y = 2
+Morpion.action = 1
+Morpion.action = 0
+Morpion.x = 1
+Morpion.y = 1
+Morpion.action = 1
+Morpion.action = 0
+Morpion.x = 2
+Morpion.y = 3
+Morpion.action = 1
+Morpion.action = 0
+Morpion.x = 1
+Morpion.y = 2
+Morpion.action = 1
+Morpion.action = 0
+Morpion.x = 2
+Morpion.y = 1
+Morpion.action = 1
+assert Morpion.player1_win == 1 or Morpion.player2_win == 1
+
+Morpion.action = 0
+Morpion.reset = 1
+Morpion.reset = 0
+
+// Égalité
+Morpion.x = 1
+Morpion.y = 1
+Morpion.action = 1
+Morpion.action = 0
+Morpion.x = 2
+Morpion.y = 1
+Morpion.action = 1
+Morpion.action = 0
+Morpion.x = 3
+Morpion.y = 1
+Morpion.action = 1
+Morpion.action = 0
+Morpion.x = 1
+Morpion.y = 3
+Morpion.action = 1
+Morpion.action = 0
+Morpion.x = 2
+Morpion.y = 2
+Morpion.action = 1
+Morpion.action = 0
+Morpion.x = 3
+Morpion.y = 3
+Morpion.action = 1
+Morpion.action = 0
+Morpion.x = 2
+Morpion.y = 3
+Morpion.action = 1
+Morpion.action = 0
+Morpion.x = 1
+Morpion.y = 2
+Morpion.action = 1
+Morpion.action = 0
+Morpion.x = 3
+Morpion.y = 2
+Morpion.action = 1
+Morpion.action = 0
+assert Morpion.tie == 1
+
+// Désinscription du jeu
+stop Morpion
+assert gameUnregister from Morpion
+}
